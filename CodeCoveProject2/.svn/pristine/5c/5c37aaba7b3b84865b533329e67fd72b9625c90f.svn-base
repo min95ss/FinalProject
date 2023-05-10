@@ -1,0 +1,9 @@
+package kr.or.ddit.mapper.solutions;
+
+import kr.or.ddit.expert.vo.TemplateReviewVO;
+
+public interface ReviewMapper {
+
+	public void templateReviewInsert(TemplateReviewVO templateReviewVO);
+
+}

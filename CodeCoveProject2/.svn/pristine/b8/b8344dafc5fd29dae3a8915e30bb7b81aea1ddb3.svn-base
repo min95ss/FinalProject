@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.member.MyChartMapper">
+
+<select id="selectYearProfie" resultType="MyChartVO">
+	select extract(month from to_date(substr(a.my_eprod, 5, 6), 'YY-MM-DD')) as chMonth, sum(a.eprod_price) as chMonthSum
+	from tb_myexpert a, tb_exp_prod b
+	where a.eprod_num = b.eprod_num
+	and b.expert_id = #{expertId}
+	and substr(a.my_eprod, 5, 2) = #{chYear}
+	group by extract(month from to_date(substr(a.my_eprod, 5, 6), 'YY-MM-DD'))
+</select>
+
+
+<select id="selectCategoryProfit" resultType="MyChartVO">
+	select extract(month from to_date(substr(a.my_eprod, 5, 6), 'YY-MM-DD')) as chMonth, b.eprod_cate_num as chProdCate, sum(a.eprod_price) as chMonthSum
+	from tb_myexpert a, tb_exp_prod b
+	where a.eprod_num = b.eprod_num
+	and b.expert_id = #{expertId}
+	and substr(a.my_eprod, 5, 2) = #{chYear}
+	and b.eprod_cate_num = #{chCateName}
+	group by extract(month from to_date(substr(a.my_eprod, 5, 6), 'YY-MM-DD')), b.eprod_cate_num	
+</select>
+
+
+<select id="totalSellList" resultType="MyExpertVO">
+    select A.EPAY_NUM, B.eprod_name, A.epay_date, A.amount, B.PROGRESS_CODE
+    from tb_eprod_payment A
+    inner join tb_myexpert B
+    on (B.MY_EPROD = A.MY_EPROD and A.EPAY_YN ='Y' and B.EPRODPAY_YN ='Y')
+    inner join tb_exp_prod C
+    on (C.eprod_num = B.eprod_num)
+    where c.expert_id = #{expertId}
+    order by a.epay_date desc
+</select>
+
+
+
+
+</mapper>

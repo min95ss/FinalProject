@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.admin.ExpertMapper">
+
+	<!-- 멘토신청자 리스트 -->
+	<select id="selectExpList" resultType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.selectExpList */
+		SELECT
+			  TEF.EXP_FORM_NUM
+			, TEF.FORM_ID
+			, TEF.EXP_FORM_CONTENT
+			, TEF.EXP_FORM_ASSUME
+			, TEF.EXP_APPR_CODE
+			, TEF.EXP_REFUSE
+			, TEF.EXP_REG_DATE
+			, TCC.COM_CODE_NM
+		FROM
+			TB_EXP_FORM TEF LEFT OUTER JOIN TB_COM_CODE TCC ON(TEF.EXP_APPR_CODE = TCC.COM_CODE)
+	</select>
+	
+	<!-- 멘토신청서 세부내역 -->
+	<select id="selectExpform" parameterType="string" resultType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.selectExpform */
+		SELECT
+			  TEF.EXP_FORM_NUM
+			, TEF.FORM_ID
+			, TEF.EXP_FORM_CONTENT
+			, TEF.EXP_FORM_ASSUME
+			, TEF.EXP_APPR_CODE
+			, TEF.EXP_REFUSE
+			, TEF.EXP_REG_DATE
+			, TCC.COM_CODE_NM
+		FROM
+			TB_EXP_FORM TEF LEFT OUTER JOIN TB_COM_CODE TCC ON(TEF.EXP_APPR_CODE = TCC.COM_CODE)
+		WHERE
+			TEF.EXP_FORM_NUM = #{expFormNum}
+	</select>
+	
+	<!-- 멘토승인 후 멘토회원 정보 등록 -->
+	<insert id="registerExpert" parameterType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.registerExpert */
+		INSERT INTO
+			TB_EXPERT
+				(  EXPERT_ID
+				 , PRESENTATION
+				 , ASSUME )
+			VALUES
+				(  #{expertId}
+				 , #{presentation}
+				 , #{assume}
+				) 
+	</insert>
+	
+	<!-- 멘토승인 후 멘토회원 접수코드 변경 -->
+	<update id="modifyApplyCode" parameterType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.modifyApplyCode */
+		UPDATE
+			TB_EXP_FORM
+		SET
+			EXP_APPR_CODE = 'APP03'
+		WHERE
+			EXP_FORM_NUM = #{expFormNum}
+	</update>
+	
+	<update id="refuseExpert" parameterType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.refuseExpert */
+		UPDATE
+			TB_EXP_FORM
+		SET
+			EXP_APPR_CODE = 'APP04',
+			EXP_REFUSE = #{expRefuse}
+		WHERE
+			EXP_FORM_NUM = #{expFormNum}
+	</update>
+
+</mapper>

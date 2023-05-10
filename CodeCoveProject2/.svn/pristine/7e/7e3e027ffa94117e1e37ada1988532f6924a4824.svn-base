@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.project.IWorkAssignMapper">
+
+	<insert id="register" parameterType="WorkAssignVO">
+		<selectKey keyProperty="assignmentNum" keyColumn="ASSIGNMENT_NUM"
+			order="BEFORE" resultType="String">
+			SELECT fn_create_num(to_char(sysdate,'yymmdd'), 'TB_WORK_ASSIGNMENT', 'ASSIGNMENT_NUM', UPPER('WKAS'))
+			FROM DUAL
+		</selectKey>
+		insert into tb_work_assignment(
+			ASSIGNMENT_NUM, WORK_NUM, COL_NUM, ASSIGNMENT_DEL_YN
+		)values(
+			#{assignmentNum}, #{workNum}, #{colNum}, #{assignmentDelYn}
+		)
+	</insert>
+
+</mapper>

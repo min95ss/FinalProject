@@ -1,0 +1,91 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
+	
+<!--///////////Page sidebar begin///////////////-->
+<aside class="page-sidebar">
+	<div class="h-100 flex-column d-flex justify-content-start">
+
+		<!--Aside-logo-->
+		<div
+			class="aside-logo d-flex align-items-center flex-shrink-0 justify-content-start px-5 position-relative">
+			<a href="/coco/main" class="d-block">
+				<div class="d-flex align-items-center flex-no-wrap text-truncate">
+					<!--Logo-icon-->
+					<span
+						class="sidebar-icon size-40 d-flex align-items-center justify-content-center fs-4 lh-1 text-white rounded-3 bg-gradient-primary fw-bolder">
+						C </span> <span class="sidebar-text"> <!--Sidebar-text--> <span
+						class="sidebar-text text-truncate fs-3 fw-bold"> CodeCove </span>
+					</span>
+				</div>
+			</a>
+		</div>
+		<!--Sidebar-Menu-->
+		<div class="aside-menu px-3 my-auto" data-simplebar>
+			<nav class="flex-grow-1 h-100" id="page-navbar">
+				<!--:Sidebar nav-->
+				<ul class="nav flex-column collapse-group collapse d-flex">
+					<li class="nav-item sidebar-title text-truncate opacity-50 small">
+						<i class="bi bi-three-dots"></i> <span>My Page</span>
+					</li>
+					<li class="nav-item"><a href="/coco/profile"
+						class="nav-link d-flex align-items-center text-truncate active">
+							<span class="sidebar-icon"> <span
+								class="material-symbols-rounded"> account_circle </span>
+						</span> <!--Sidebar nav text--> <span class="sidebar-text">내 정보</span>
+					</a></li>
+					
+					<li class="nav-item"><a href="/coco/myPurchase"
+						class="nav-link d-flex align-items-center text-truncate "> <span
+							class="sidebar-icon"> <span
+								class="material-symbols-rounded"> database </span>
+						</span> <!--Sidebar nav text--> <span class="sidebar-text">구매내역</span>
+					</a></li>
+					
+					<li class="nav-item"><a href="/coco/myChart"
+						class="nav-link d-flex align-items-center text-truncate "> <span
+							class="sidebar-icon"> <span
+								class="material-symbols-rounded"> monitoring </span>
+						</span> <!--Sidebar nav text--> <span class="sidebar-text">매출관리</span>
+					</a></li>
+					
+					<li class="nav-item">
+						<a href="/coco/mentorList"
+							class="nav-link d-flex align-items-center text-truncate "> 
+						<span
+							class="sidebar-icon"> <span
+								class="material-symbols-rounded"> edit_note </span>
+						</span> <!--Sidebar nav text--> <span class="sidebar-text">멘토신청</span>
+					</a></li>
+					
+					
+					<li class="nav-item">
+						<a href="/coco/myCommunity"
+							class="nav-link d-flex align-items-center text-truncate"> 
+						<span
+							class="sidebar-icon"> <span
+								class="material-symbols-rounded"> public </span>
+						</span> <!--Sidebar nav text--> <span class="sidebar-text">커뮤니티</span>
+					</a></li>
+
+					<!-- 채팅부분 -->
+					<li class="nav-item"><a href="/coco/chatting/chatProject"
+						class="nav-link d-flex align-items-center text-truncate @@if (context.page === 'chat') {active}">
+							<span class="sidebar-icon"> <span
+								class="material-symbols-rounded"> chat </span>
+						</span> <span class="sidebar-text">Chat</span>
+					</a></li>
+					<!-- 채팅부분 -->
+
+				</ul>
+			</nav>
+		</div>
+	</div>
+</aside>
+<!--///////////Page Sidebar End///////////////-->
+
+<!--///Sidebar close button for 991px or below devices///-->
+<div class="sidebar-close d-lg-none">
+	<a href="#"></a>
+</div>
+<!--///.Sidebar close end///-->

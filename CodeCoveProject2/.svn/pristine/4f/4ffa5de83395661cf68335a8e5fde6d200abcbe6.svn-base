@@ -1,0 +1,22 @@
+package kr.or.ddit.mapper.chat;
+
+import org.apache.ibatis.annotations.Param;
+
+import kr.or.ddit.common.chat.vo.ChatVO;
+
+public interface ChatMapper {
+
+//	public void register(@Param("fullName")String fileName) throws Exception;
+
+	public ChatVO roomCheck(String epayNum);
+
+	// 구매내역 채팅방 생성
+	public int roomCreate(String epayNum);
+
+	// 채팅 일반 메세지 insert
+	public int chatMsgInsert(ChatVO chatVO);
+
+	// 채팅 파일 insert
+	public int fileInsert(ChatVO chatVO);
+
+}

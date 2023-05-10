@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<h3>회원 리스트</h3>
+
+<div class="card">
+	<table id="datatable"
+		class="table mt-0 table-striped table-card table-nowrap">
+		<thead class="text-uppercase small text-body-secondary">
+			<tr>
+				<td>회원아이디</td>
+				<td>회원비밀번호</td>
+				<td>회원명</td>
+				<td>회원닉네임</td>
+				<td>회원이메일</td>
+				<td>회원연락처</td>
+				<td>누적신고수</td>
+				<td>멘토신청여부</td>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+			<c:forEach items="${memberList }" var="member">
+				<tr id="trs">
+					<td>${member.memId }</td>
+					<td>${member.memPass }</td>
+					<td>${member.memName }</td>
+					<td>${member.memNick }</td>
+					<td>${member.memMail }</td>
+					<td>${member.memHP }</td>
+					<td>${member.report }</td>
+					<td>${member.memexpYn }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+
+
+<script>
+	$(document).ready(function() {
+
+		$('#datatable').DataTable({
+			"filter" : true
+		});
+
+	});
+</script>

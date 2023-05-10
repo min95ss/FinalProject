@@ -1,0 +1,32 @@
+package kr.or.ddit.mapper.board;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.board.vo.CooBoardVO;
+import kr.or.ddit.board.vo.CooFormVO;
+import kr.or.ddit.project.project.vo.ProjectVO;
+
+public interface CooBoardMapper {
+
+	public int insertCooBoard(CooBoardVO cooBoardVO);
+    
+	public List<ProjectVO> selectProjList(String memId);
+    
+	public ProjectVO selectPjId(String pjId);
+    
+	public List<CooBoardVO> selectPjBoList();
+   
+	public CooBoardVO selectCooBoard(Map<String, String> map);
+    
+	//게시글 상세보기, 조회수
+	public void incrementHit(String cooNm);
+	public CooBoardVO read(String cooNm);
+
+	public int insertApplyForm(CooFormVO cooFormVO);
+
+
+
+
+
+}

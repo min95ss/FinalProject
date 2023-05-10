@@ -1,0 +1,11 @@
+package kr.or.ddit.board.service;
+
+import java.util.List;
+
+import kr.or.ddit.blog.vo.MyBlogPostVO;
+
+public interface BlogBoardService {
+
+	public List<MyBlogPostVO> publicBoardList(String postPublicYn, String postDelYn);
+
+}

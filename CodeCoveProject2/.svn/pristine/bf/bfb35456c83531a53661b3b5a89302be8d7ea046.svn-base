@@ -1,0 +1,25 @@
+package kr.or.ddit.board.service;
+
+import java.util.List;
+
+import kr.or.ddit.board.vo.CooBoardVO;
+import kr.or.ddit.board.vo.CooFormVO;
+import kr.or.ddit.project.project.vo.ProjectVO;
+
+public interface CooBoardService {
+
+	public int insertCooBoard(CooBoardVO cooBoardVO);
+
+	public List<ProjectVO> selectProjList(String memId);
+
+	public ProjectVO selectPjId(String pjId);
+
+	public List<CooBoardVO> selectPjBoList();
+
+	public CooBoardVO retrievePost(String cooNm);	//게시글 상세보기
+
+	public CooBoardVO read(String cooNm);	//조회수
+
+	public int insertApplyForm(CooFormVO cooFormVO);
+
+}

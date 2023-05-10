@@ -1,0 +1,21 @@
+package kr.or.ddit.common.chat.vo;
+
+
+import java.sql.Date;
+
+import lombok.Data;
+
+@Data
+public class ChatVO {
+	private String crContentNum; 
+	private String crNum;
+	private String crContent; 
+	private Date crDate;
+	private String attatchNum;
+	private String memId;
+	
+	// chatRoom
+	private Date crCreateDate;
+	private String crId;
+	
+}

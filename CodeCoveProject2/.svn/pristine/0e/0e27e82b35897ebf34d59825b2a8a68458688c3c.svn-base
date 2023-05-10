@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.CooBoardMapper">
+
+<insert id="insertCooBoard" parameterType="CooBoardVO" useGeneratedKeys="true">
+	<selectKey keyProperty="cooNm" keyColumn="COO_NM" order="BEFORE" resultType="String">
+		SELECT
+		fn_create_num(to_char(sysdate,'yymmdd'), 'TB_COOBOARD', 'COO_NM',
+		UPPER('cobo'))
+		FROM DUAL
+	</selectKey>
+	insert into TB_COOBOARD(
+	coo_nm, writer_id, pj_id, coo_title, coo_content, coo_people_num, coo_start_date
+	, coo_end_date, coo_done_yn, view_num, coo_date, coo_thumbnail
+	)values(
+	#{cooNm},#{writerId},#{pjId},#{cooTitle},#{cooContent},#{cooPeopleNum},#{cooStartDate},
+	#{cooEndDate},#{cooDoneYn},0,sysdate,#{cooThumbnail}
+	)
+</insert>
+
+
+</mapper>
+
+
+
+
+
+
+

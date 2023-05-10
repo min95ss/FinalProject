@@ -1,0 +1,365 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Assan-Admin</title>
+
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+<!-- 스크립트 나중에 빼기 -->
+
+<!--Bootstrap icons-->
+<link href="/resources/assets/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+<!--Google web fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&family=IBM+Plex+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+<!--Simplebar css-->
+<link rel="stylesheet" href="/resources/assets/vendor/css/simplebar.min.css">
+
+<!--Choices css-->
+<link rel="stylesheet" href="/resources/assets/vendor/css/choices.min.css">
+
+<!--Main style-->
+<link rel="stylesheet" href="/resources/assets/css/style.min.css">
+
+    <body>
+
+                <!--///////////Page content wrapper///////////////-->
+                <main class="page-content d-flex flex-column flex-row-fluid">
+
+                    <!--//Page content//-->
+                    <div class="px-3 px-lg-6">
+                        <div class="content shadow-lg content-wrapper content-expand-md">
+                            <!--Content-wrapper-overlay when sidebar open for 768px down width-->
+                            <div class="content-wrapper-overlay"></div>
+                            <!--Content-sidebar-->
+                            <div class="content-left">
+                                <div class="content-sidebar overflow-hidden card align-items-stretch h-100"
+                                    id="content-sidebar">
+                                    <!--content-sidebar-header-->
+                                    <div class="content-sidebar-header p-0 border-bottom position-relative">
+<!--                                         <form class="position-relative w-100 d-flex align-items-center"> -->
+                                            <div style="align-items:center;"
+                                                class="position-absolute start-0 top-50 translate-middle-y opacity-50 lh-1 ms-3">
+<!--                                                 <span class="material-symbols-rounded align-middle fs-5"> -->
+<!--                                                     search -->
+<!--                                                     </span> -->
+												<a class="navbar-brand" href="/coco/main"
+													style="color: #00c7ae;"> <img
+													src="/resources/images/codecovelogobasic.png" alt=""
+													class="img-fluid navbar-brand-light"
+													style="width: 30px; height: auto;">&nbsp; &nbsp;CodeCove
+												</a>
+											</div>
+<!--                                             <input type="text" -->
+<!--                                                 class="form-control ps-8 height-70 bg-transparent border-0 py-0 shadow-none" -->
+<!--                                                 placeholder="Start new chat"> -->
+<!--                                             <button type="button" -->
+<!--                                                 class="btn d-md-none content_sidebar_toggler p-0 size-30 rounded-circle flex-center position-absolute shadow-none end-0 me-2 top-50 translate-middle-y text-body"> -->
+<!--                                                 <span class="material-symbols-rounded align-middle"> -->
+<!--                                                     close -->
+<!--                                                     </span> -->
+<!--                                             </button> -->
+<!--                                         </form> -->
+                                    </div>
+
+                                    <!--content-sidebar-body-->
+                                    <div class="content-sidebar-body p-0 card-body">
+                                        <div class="list-group list-group-flush mb-0">
+                                            <!--Chat User-->
+
+												<c:choose>
+													<c:when test="${empty chatRoomList }">
+															<a>참여중인 프로젝트가 없습니다.</a>
+													</c:when>
+													<c:otherwise>
+														<c:forEach items="${chatRoomList }" var="chat" varStatus="stat">
+																<a href="#!"
+																	class="list-group-item px-3 align-items-center list-group-item-action border-0 d-flex py-3">
+																	<div class="flex-shrink-0">
+																		<div
+																			class="avatar-status status-online me-3 avatar d-flex align-items-center justify-content-center bg-primary text-white fw-bolder rounded-circle">
+																			${fn:substring(chat.pjName,0,1) }</div>
+																	</div>
+																	<div class="overflow-hidden flex-grow-1">
+																		<div class="d-flex overflow-hidden">
+																			<h6 class="mb-0 text-reset text-truncate pe-3 flex-grow-1">${chat.pjName }</h6>
+																			<small class="d-block flex-shrink-0 opacity-75 ms-auto">${chat.pjCreateDate }</small>
+																		</div>
+																		<p class="mb-0 opacity-75 text-truncate">
+																			<span>채팅내용이뜬다내요 </span>
+																		</p>
+																	</div>
+																</a>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+						
+														<!--Load more button-->
+                                            <a href="#!"
+                                                class="list-group-item px-3 align-items-center justify-content-center list-group-item-action d-flex py-3">
+                                                <span>Load more</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!--content-right-->
+                            <div class="content-right card align-items-stretch h-100">
+
+                                <!--content right Header-->
+                                <div class="content-right-header card-header px-3">
+
+                                    <div class="me-3 d-md-none">
+                                        <button type="button"
+                                            class="content_sidebar_toggler text-body border-0 p-0 bg-transparent">
+                                            <span class="material-symbols-rounded align-middle">
+                                                menu_open
+                                                </span>
+                                        </button>
+                                    </div>
+                                    <div class="me-auto d-flex align-items-center">
+                                        <div class="avatar-status d-none d-sm-flex status-online me-3 flex-shrink-0 avatar">
+                                            <img src="assets/media/avatars/03.jpg" class="rounded-circle img-fluid"
+                                                alt="">
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0 lh-1">Adam Voges</h5>
+                                            <span class="small lh-sm d-none d-sm-block">Active now</span>
+                                        </div>
+                                    </div>
+                                    <!--Buttons group-->
+                                </div>
+
+                                <!--content-right body-->
+                                <div class="content-right-body card-body">
+                                    <div class="flex-row-fluid ">
+
+                                        <!--Chat divider with day/month-->
+                                        <div class="d-flex mb-4 align-items-center justify-content-center">
+                                            <span class="d-block border-top flex-grow-1"></span>
+                                            <div class="text-body-secondary mx-3 small">
+                                                Today</div>
+                                            <span class="d-block border-top flex-grow-1"></span>
+                                        </div>
+
+                                        <!--Chat sender-->
+                                        <div class="chat_in mb-4">
+                                            <!--Chat box-->
+                                            <div class="chat_content">
+                                                <!--More dropdown-->
+                                                <div
+                                                    class="dropdown chat_dropdown position-absolute end-0 top-0 me-2 mt-1">
+                                                    <a href="#" data-bs-toggle="dropdown">
+                                                        <span class="material-symbols-rounded">
+expand_more
+</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="#!" class="dropdown-item">Info</a>
+                                                        <a href="#!" class="dropdown-item">Reply</a>
+                                                        <a href="#!" class="dropdown-item">Forward</a>
+                                                        <a href="#!" class="dropdown-item">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <!--text-->
+                                                    <div class="chat_text">
+                                                        Hi Noah, ðŸ™‚
+                                                    </div>
+                                                    <!--time-->
+                                                    <div class="chat_time">
+                                                        <span>12:33 PM</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Chat box-->
+                                            <div class="chat_content">
+                                                <!--More dropdown-->
+                                                <div
+                                                    class="dropdown chat_dropdown position-absolute end-0 top-0 me-2 mt-1">
+                                                    <a href="#" data-bs-toggle="dropdown">
+                                                        <span class="material-symbols-rounded">
+expand_more
+</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="#!" class="dropdown-item">Info</a>
+                                                        <a href="#!" class="dropdown-item">Reply</a>
+                                                        <a href="#!" class="dropdown-item">Forward</a>
+                                                        <a href="#!" class="dropdown-item">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <!--text-->
+                                                    <div class="chat_text">
+                                                        Lorem ipsum is placeholder text commonly used in the graphic,
+                                                        print, and publishing industries for previewing layouts and
+                                                        visual mockups.
+                                                    </div>
+                                                    <!--time-->
+                                                    <div class="chat_time">
+                                                        <span>12:34 PM</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Chat Self-->
+                                        <div class="chat_out">
+                                            <!--Chat box-->
+                                            <div class="chat_content">
+                                                <!--More dropdown-->
+                                                <div
+                                                    class="dropdown chat_dropdown position-absolute end-0 top-0 me-2 mt-1">
+                                                    <a class="text-reset" href="#" data-bs-toggle="dropdown">
+                                                        <span class="material-symbols-rounded">
+expand_more
+</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="#!" class="dropdown-item">Info</a>
+                                                        <a href="#!" class="dropdown-item">Reply</a>
+                                                        <a href="#!" class="dropdown-item">Forward</a>
+                                                        <a href="#!" class="dropdown-item">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <!--text-->
+                                                    <div class="chat_text">
+                                                        Hi Noah, ðŸ™‚
+                                                    </div>
+                                                    <!--time-->
+                                                    <div class="chat_time">
+                                                        <span>12:33 PM</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Chat box-->
+                                            <div class="chat_content">
+                                                <!--More dropdown-->
+                                                <div
+                                                    class="dropdown chat_dropdown position-absolute end-0 top-0 me-2 mt-1">
+                                                    <a class="text-reset" href="#" data-bs-toggle="dropdown">
+                                                        <span class="material-symbols-rounded">
+																expand_more
+																</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="#!" class="dropdown-item">Info</a>
+                                                        <a href="#!" class="dropdown-item">Reply</a>
+                                                        <a href="#!" class="dropdown-item">Forward</a>
+                                                        <a href="#!" class="dropdown-item">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    <!--text-->
+                                                    <div class="chat_text">
+                                                        Lorem ipsum is placeholder text commonly used in the graphic,
+                                                        print, and publishing industries for previewing layouts and
+                                                        visual mockups.
+                                                    </div>
+                                                    <!--time-->
+                                                    <div class="chat_time">
+                                                        <span>12:34 PM</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <!--content right footer-->
+                                <div class="content-right-footer card-footer" data-dropzone-area="">
+                                    <div class="dz-preview" id="dz-preview-row" data-horizontal-scroll="">
+                                    </div>
+                                    <form class="chat-form rounded-pill" data-emoji-form="">
+                                        <div class="row align-items-center g-1">
+
+                                            <div class="col">
+                                                <div class="d-flex align-items-center">
+                                                    <input class="form-control border-0 p-0 shadow-none bg-transparent"
+                                                        placeholder="Type your message..." rows="1" data-emoji-input=""
+                                                        data-autosize="true">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-auto">
+                                                <div class="btn-group btn-group-icon btn-group-sm">
+                                                    <button type="button"
+                                                        class="btn p-0 size-35 btn-outline-secondary d-flex align-items-center justify-content-center dz-clickable"
+                                                        id="dz-btn">
+                                                        <span class="material-symbols-rounded align-middle">
+                                                            attach_file
+                                                            </span>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn p-0 size-35 btn-outline-secondary d-flex align-items-center justify-content-center">
+                                                        <span class="material-symbols-rounded align-middle">
+                                                            mood
+                                                            </span>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn p-0 btn p-0 size-35 btn-outline-secondary d-flex align-items-center justify-content-center">
+                                                        <span class="material-symbols-rounded align-middle">
+                                                            send
+                                                            </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--//Page content End//-->
+
+
+                </main>
+                <!--///////////Page content wrapper End///////////////-->
+            </div>
+        </div>
+        
+        <!--////////////Theme Core scripts Start/////////////////-->
+        <script src="assets/js/theme.bundle.min.js"></script>
+
+        <!--////////////Theme Core scripts End/////////////////-->
+
+<script>
+$(function() {
+	
+	//여기에다,,, 웹소켓 어케 넣을지 생각해봐라
+	
+	
+	
+}); // end of Script
+</script>
+
+
+        <!--Chat sidebar toggler-->
+        <script>
+            $('.content_sidebar_toggler,.content-wrapper-overlay').on("click", function (e) {
+                $('.content-expand-md').toggleClass("content_sidebar_show");
+            });
+
+        </script>
+    </body>
+
+</html>

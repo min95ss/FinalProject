@@ -1,0 +1,22 @@
+package kr.or.ddit.expert.service;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.expert.vo.TemplateReviewVO;
+import kr.or.ddit.mapper.solutions.ReviewMapper;
+
+@Service
+public class TemplateReviewServiceImpl implements ITemplateReviewService {
+
+	@Inject
+	ReviewMapper mapper;
+	
+	
+	@Override
+	public void reviewInsert(TemplateReviewVO templateReviewVO) {
+		mapper.templateReviewInsert(templateReviewVO);
+	}
+
+}

@@ -1,0 +1,24 @@
+package kr.or.ddit.expert.service;
+
+import kr.or.ddit.expert.vo.ExpertProdVO;
+import kr.or.ddit.expert.vo.MyExpertVO;
+
+public interface IEprodService {
+
+	//템플릿 판매용 인서트
+	public void templateInsert(ExpertProdVO expertProdVO) throws Exception;
+
+	//템플릿 디테일 출력(셀렉트)
+	public ExpertProdVO templateDetail(String eprodNum);
+
+	//디테일에서 구매하기작동 시 아작스로 구매내역 인서트
+	public void buyInsert(MyExpertVO myExpertVO);
+
+	//구매완료 후 1.인서트
+	public MyExpertVO paySuccessInsert(MyExpertVO myExpertVO);
+
+	
+
+
+
+}

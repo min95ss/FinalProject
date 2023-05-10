@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.admin.QnAMapper">
+	 
+	<resultMap type="AttatchVO" id="attatchMap">
+		<result property="attatchNum" column="ATTATCH_NUM"/>
+		<result property="attatchOrder" column="ATTATCH_ORDER"/>
+		<result property="attatchPlace" column="ATTATCH_PLACE"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="originNm" column="ORIGIN_NM"/>
+		<result property="saveNm" column="SAVE_NM"/>
+		<result property="attatchType" column="ATTATCH_TYPE"/>
+		<result property="attatchSize" column="ATTATCH_SIZE"/>
+		<result property="downNumber" column="DOWN_COUNT"/>
+		<result property="attatchDate" column="ATTATCH_DATE"/>
+		<result property="uploaderId" column="UPLOADER_ID"/>
+	</resultMap>
+	 
+	 
+	 <!-- QnA 게시판 게시물 등록 -->
+	 <insert id="registerQnA" parameterType="qnaVO">
+	 	/* kr.or.ddit.mapper.admin.QnAMapper.registerQnA */
+	 	INSERT INTO
+	 		TB_QNA
+	 			(	  QNA_NUM
+	 				, WRITER_ID
+	 				, QNA_TITLE
+	 				, QNA_CONTENT
+	 				, QNA_PASS
+	 				, QNA_PUBLIC_YN
+	 				, VIEW_NUM
+	 				, QNA_DATE
+	 			) VALUES (
+	 				  fn_create_num(to_char(SYSDATE,'yymmdd'), 'TB_QNA', 'QNA_NUM', UPPER('QNAA'))
+	 				, #{writerId}
+	 				, #{qnaTitle}
+	 				, #{qnaContent}
+	 				, #{qnaPass}
+	 				, #{qnaPublicYn}
+	 				, 0
+	 				, SYSDATE
+	 			)
+	 </insert>
+	 
+	 <!-- QnA 게시판 게시물 수 조회 -->
+	 <select id="countQnAList" resultType="int" parameterType="PaginationInfoVO">
+	 	SELECT
+	 		COUNT(*)
+	 	FROM
+	 		TB_QNA A
+	 	WHERE
+	 		1=1
+	 		<if test="searchWord != null and searchWord != ''">
+	 	AND
+	 		(	INSTR(A.WRITER_ID, #{searchWord}) > 0
+				OR
+	 			INSTR(A.QNA_TITLE, #{searchWord}) > 0
+				OR
+	 			INSTR(A.ANSWER_TITLE, #{searchWord}) > 0	)
+	 		</if>
+	 </select>
+	 
+	 <!-- QnA 게시판 게시판 리스트 조회 -->
+	 <select id="selectQnABoardList" resultType="qnaVO">
+		/* kr.or.ddit.mapper.admin.QnAMapper.selectQnABoardList */
+		SELECT
+			B.*
+		FROM
+			( SELECT 
+		 			A.*, ROW_NUMBER() OVER (ORDER BY A.QNA_DATE DESC) RNUM
+		  	  FROM 
+				 	( SELECT
+					 	  ROWNUM
+					 	, A.QNA_NUM
+					 	, A.WRITER_ID
+					 	, A.QNA_TITLE
+					 	, A.QNA_PASS
+					 	, A.QNA_DATE 
+					 	, A.VIEW_NUM
+					 	, A.QNA_PUBLIC_YN
+					 	, A.ANSWER_TITLE
+					 	, A.ANSWER_ID
+					 	, A.ANSWER_DATE 
+					 FROM
+				 		TB_QNA A
+				 	 WHERE
+				 	 	1=1
+				 	 <if test="searchWord != null and searchWord != ''">
+				 	 AND (	INSTR(A.WRITER_ID, #{searchWord}) > 0
+							OR
+				 			INSTR(A.QNA_TITLE, #{searchWord}) > 0
+							OR
+				 			INSTR(A.ANSWER_TITLE, #{searchWord}) > 0	)
+				 	 </if>
+					 ORDER BY
+			            A.QNA_DATE DESC
+			            ) A
+			  	) B
+	 </select>
+	 
+	 <!-- QnA 게시판 게시물 읽기 -->
+	 <select id="readQnA" parameterType="string" resultType="qnaVO">
+	 /* kr.or.ddit.mapper.admin.QnAMapper.readQnA */
+	 	SELECT
+	 		  TQ.QNA_NUM
+	 		, TQ.WRITER_ID
+	 		, TQ.QNA_TITLE
+	 		, TQ.QNA_CONTENT
+	 		, TQ.QNA_DATE
+	 		, TQ.VIEW_NUM
+            , ATTATCH_NUM
+            , ATTATCH_ORDER
+            , ATTATCH_PLACE
+            , FILE_PATH
+            , ORIGIN_NM
+            , SAVE_NM
+            , ATTATCH_TYPE
+            , ATTATCH_SIZE
+            , DOWN_COUNT
+            , ATTATCH_DATE
+            , UPLOADER_ID
+	 	FROM
+	 		TB_QNA TQ LEFT OUTER JOIN TB_ATTATCH TAA ON (TQ.QNA_NUM = TAA.ATTATCH_PLACE)
+	 	WHERE
+	 		TQ.QNA_NUM = #{qnaNum}
+	 </select>
+	 
+	 <update id="incrementView" parameterType="string">
+	 /* kr.or.ddit.mapper.admin.QnAMapper.incrementView */
+	 	UPDATE
+	 		TB_QNA
+	 	SET
+			VIEW_NUM = VIEW_NUM + 1
+		WHERE
+			QNA_NUM = #{qnaNum}
+	 </update>
+
+</mapper>

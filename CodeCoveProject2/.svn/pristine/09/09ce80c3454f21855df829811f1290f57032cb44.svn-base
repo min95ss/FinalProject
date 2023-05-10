@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.admin.ExpertMapper">
+
+	<!-- 멘토신청자 수량 카운트(단어서치 포함) -->
+	<select id="countExpList" resultType="int" parameterType="PaginationInfoVO">
+	/* kr.or.ddit.mapper.admin.ExpertMapper.countExpList */
+		SELECT
+    		COUNT(*)
+		FROM 
+    		TB_EXP_FORM TEF LEFT OUTER JOIN TB_MEMBER TM ON(TEF.FORM_ID = TM.MEM_ID)
+    	WHERE
+    		1=1
+    		<if test="searchWord != null and searchWord != ''">
+    	AND
+    		( INSTR (TEF.EXP_FORM_NUM , #{searchWord}) > 0
+    		  OR
+    		  INSTR (TEF.FORM_ID, #{searchWord}) > 0  
+    		  OR
+    		  INSTR (TM.MEM_NAME, #{searchWord}) > 0 
+    		  OR
+    		  INSTR (TM.MEM_NICK, #{searchWord}) > 0
+    		  OR
+    		  TM.MEM_MAIL LIKE '%'||#{searchWord}||'%'  
+    		)
+    		</if>
+	</select>
+
+	<!-- 멘토신청자 리스트 -->
+	<select id="selectExpList" resultType="ExpertVO" parameterType="PaginationInfoVO">
+	/* kr.or.ddit.mapper.admin.ExpertMapper.selectExpList */
+		SELECT
+		    TEFCM.*
+		FROM
+		    (SELECT
+		        ROWNUM RNUM
+		        , TEFC.*
+		        , TM.MEM_NAME
+		        , TM.MEM_NICK
+		        , TM.MEM_MAIL
+		    FROM
+		        (    
+		        SELECT
+					  TEF.EXP_FORM_NUM
+					, TEF.FORM_ID
+					, TEF.EXP_FORM_CONTENT
+					, TEF.EXP_FORM_ASSUME
+					, TEF.EXP_APPR_CODE
+					, TEF.EXP_REFUSE
+					, TEF.EXP_REG_DATE
+					, TCC.COM_CODE_NM
+				FROM
+					TB_EXP_FORM TEF LEFT OUTER JOIN TB_COM_CODE TCC ON(TEF.EXP_APPR_CODE = TCC.COM_CODE)
+		        ORDER BY
+		            TEF.EXP_REG_DATE
+		        ) TEFC LEFT OUTER JOIN TB_MEMBER TM ON(TEFC.FORM_ID = TM.MEM_ID)
+		    WHERE
+		        1=1
+		        <if test="searchWord != null and searchWord != ''">
+			    AND
+			        ( INSTR (TEFC.EXP_FORM_NUM , #{searchWord}) > 0 
+			          OR
+			          INSTR (TEFC.FORM_ID, #{searchWord}) > 0 
+			          OR
+			          INSTR (TM.MEM_NAME, #{searchWord}) > 0 
+			          OR
+			          INSTR (TM.MEM_NICK, #{searchWord}) > 0 
+			          OR
+			          TM.MEM_MAIL LIKE '%'||#{searchWord}||'%' )
+			        </if>
+			    ) 
+				TEFCM
+		WHERE
+		    RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<!-- 멘토신청서 세부내역 -->
+	<select id="selectExpform" parameterType="string" resultType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.selectExpform */
+		SELECT
+			  TEF.EXP_FORM_NUM
+			, TEF.FORM_ID
+			, TEF.EXP_FORM_CONTENT
+			, TEF.EXP_FORM_ASSUME
+			, TEF.EXP_APPR_CODE
+			, TEF.EXP_REFUSE
+			, TEF.EXP_REG_DATE
+			, TCC.COM_CODE_NM
+		FROM
+			TB_EXP_FORM TEF LEFT OUTER JOIN TB_COM_CODE TCC ON(TEF.EXP_APPR_CODE = TCC.COM_CODE)
+		WHERE
+			TEF.EXP_FORM_NUM = #{expFormNum}
+	</select>
+	
+	<!-- 멘토승인 후 멘토회원 정보 등록 -->
+	<insert id="registerExpert" parameterType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.registerExpert */
+		INSERT INTO
+			TB_EXPERT
+				(  EXPERT_ID
+				 , PRESENTATION
+				 , ASSUME )
+			VALUES
+				(  #{expertId}
+				 , #{presentation}
+				 , #{assume}
+				) 
+	</insert>
+	
+	<!-- 멘토승인 후 멘토회원 접수코드 변경 -->
+	<update id="modifyApplyCode" parameterType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.modifyApplyCode */
+		UPDATE
+			TB_EXP_FORM
+		SET
+			EXP_APPR_CODE = 'APP03'
+		WHERE
+			EXP_FORM_NUM = #{expFormNum}
+	</update>
+	
+	<update id="refuseExpert" parameterType="ExpertVO">
+		/* kr.or.ddit.mapper.admin.ExpertMapper.refuseExpert */
+		UPDATE
+			TB_EXP_FORM
+		SET
+			EXP_APPR_CODE = 'APP04',
+			EXP_REFUSE = #{expRefuse}
+		WHERE
+			EXP_FORM_NUM = #{expFormNum}
+	</update>
+
+</mapper>

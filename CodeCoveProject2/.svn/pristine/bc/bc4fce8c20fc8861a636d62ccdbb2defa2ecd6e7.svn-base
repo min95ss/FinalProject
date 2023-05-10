@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.FreeBoardMapper">
+
+	<sql id="boardSearch">
+		<if test="searchType !=null and searchType == 'title'">
+			and(free_title like '%' || #{searchWord}||'%')
+		</if>
+		<if test="searchType !=null and searchType == 'writer'">
+			and(writer_id like '%' || #{searchWord}||'%')
+		</if>
+	</sql>
+
+
+	<select id="selectFreeBoardList"
+		parameterType="PaginationInfoVO" resultType="FreeBoardVO">
+		select
+		b.*
+		from(
+		select
+		a.*, row_number() over (order by a.free_num desc) rnum
+		from(
+		select
+		free_num, writer_id, free_title, free_content,
+		to_char(free_date,'yy-mm-dd hh24:mi:ss') free_date, view_num,
+		mem_name, mem_mail, mem_profile
+		from tb_freeboard b left outer join tb_member m on(b.writer_id=m.mem_id)
+		where 1=1
+		<include refid="boardSearch" />
+		order by free_num desc
+		)a
+		)b
+	<![CDATA[
+		where b.rnum >=#{startRow} and b.rnum <= #{endRow}
+	]]>
+
+	</select>
+
+
+	<select id="selectFreeBoardCount"
+		parameterType="PaginationInfoVO" resultType="int">
+		select count(free_num)
+		from tb_freeboard
+		where 1=1
+		<include refid="boardSearch" />
+	</select>
+
+	<insert id="insertFreeBoard" parameterType="FreeBoardVO"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="freeNum" keyColumn="free_num"
+			order="BEFORE" resultType="String">
+			SELECT
+			fn_create_num(to_char(sysdate,'yymmdd'), 'tb_freeboard', 'free_num',
+			UPPER('free'))
+			FROM DUAL
+		</selectKey>
+		insert into tb_freeboard(
+		free_num, writer_id, free_title, free_content, free_date, rep_num, view_num
+		)values(
+		#{freeNum}, #{writerId}, #{freeTitle}, #{freeContent}, sysdate, 0, 0
+		)
+	</insert>
+
+	<select id="read" parameterType="String"
+		resultType="FreeBoardVO">
+		select
+		free_num, writer_id, free_title, free_content, free_date, rep_num, view_num
+		from tb_freeboard
+		where free_num=#{freeNum}
+	</select>
+
+	<update id="incrementHit" parameterType="String">
+		update tb_freeboard
+		set
+		view_num= view_num+1
+		where free_num=#{freeNum}
+	</update>
+
+
+
+	<!--아이디, 제목, 내용(첨부파일 포함) 불러오기 -->
+	<resultMap type="FreeBoardVO" id="freeMap"
+		autoMapping="true">
+		<id property="freeNum" column="free_num" />
+		<collection property="attatchList" ofType="AttatchVO"
+			autoMapping="true" />
+	</resultMap>
+	
+	<select id="selectFreeBoard" resultMap="freeMap" parameterType="map">
+		select
+		a.free_num
+		, a.free_title
+		, a.free_content
+		, a.writer_id
+		, to_char(a.free_date,'yyyy.mm.dd hh24:mi') as free_date
+		, b.attatch_num
+		, b.attatch_order
+		, b.file_path
+		, b.origin_nm
+		, b.save_nm
+		, b.attatch_type
+		, b.attatch_size
+		, b.attatch_date
+		from tb_freeboard a
+		left outer join tb_attatch b on(a.free_num = b.attatch_place)
+		where
+		free_num = #{freeNum}
+	</select>
+	
+	
+	<update id="updateFreeBoard" parameterType="FreeBoardVO">
+		update tb_freeboard
+			set
+			free_title=#{freeTitle}
+			free_content=#{freeContent}
+			writer_id=#{writerId}
+		where free_num = #{freeNum}
+	</update>
+
+	<delete id="deleteFreeBoard" parameterType="String">
+		delete from tb_freeboard
+		where free_num = #{freeNum}
+	</delete>
+	
+	
+</mapper>
+ 
+     
+    

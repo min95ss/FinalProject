@@ -1,0 +1,80 @@
+package kr.or.ddit.board.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.board.service.CooBoardService;
+import kr.or.ddit.board.vo.CooBoardVO;
+import kr.or.ddit.member.vo.MemberVO;
+import kr.or.ddit.project.project.vo.ProjectVO;
+
+@Controller
+@RequestMapping("coco/cooBoard")
+public class cooBoardController {
+	
+	@Inject
+	private CooBoardService service;
+	
+	@GetMapping("/list")
+	public String cooBoardList() {
+		return "board/cooBoard/list";
+	}
+	
+	@GetMapping("/read")
+	public String cooBoardDetail() {
+//		CooBoardVO cooBoardVO=service.retrievePost(cooNm);
+//		model.addAttribute("cooBoardVO", cooBoardVO);
+		return "board/cooBoard/read";
+	}
+	
+
+	@GetMapping("/form")
+	public String cooBoardForm(HttpServletRequest req,
+			@ModelAttribute("CooBoardVO") CooBoardVO cooBoardVO, Model model) {
+		String goPage="";
+		HttpSession session = req.getSession();
+		MemberVO memberVO=(MemberVO) session.getAttribute("SessionInfo"); // 글쓰는사람의 아이디
+		
+		String memId = memberVO.getMemId();
+		List<ProjectVO> projectList = service.selectProjList(memId);
+		
+		model.addAttribute("projectList", projectList);
+		model.addAttribute("cooBoardVO", cooBoardVO);
+		
+		return "board/cooBoard/form";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/CooProjectAjax",produces ="application/json;charset=utf-8" )
+	public ProjectVO CooProjectAjax(@RequestBody Map<String,String> myMap) {
+		
+		System.out.println("pjId확인: " + myMap.get("pjId"));
+		ProjectVO pjIdList=service.selectPjIdList(myMap.get("pjId"));
+
+		    System.out.println("pjIdList잘나오나요?: "+pjIdList);
+		return pjIdList;
+	}
+	
+	
+	
+
+	@PostMapping("/insert")
+	public String insertProcess(){
+		
+		return "board/cooBoard/form";
+		}
+}

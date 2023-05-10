@@ -1,0 +1,15 @@
+package kr.or.ddit.board.service;
+
+import java.util.List;
+
+import kr.or.ddit.blog.vo.MyBlogPostVO;
+
+public interface BlogBoardService {
+
+	public List<MyBlogPostVO> publicBoardList(String postPublicYn, String postDelYn);
+	
+	
+	 // 블로그 게시글 조회
+	public MyBlogPostVO retrievePublicPost(String memId, String postNum);
+
+}

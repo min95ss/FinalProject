@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.admin.QnAMapper">
+	 
+	 <!-- QnA 게시판 게시물 등록 -->
+	 <insert id="registerQnA" parameterType="qnaVO">
+	 	/* kr.or.ddit.mapper.admin.QnAMapper.registerQnA */
+	 	INSERT INTO
+	 		TB_QNA
+	 			(	  QNA_NUM
+	 				, WRITER_ID
+	 				, QNA_TITLE
+	 				, QNA_CONTENT
+	 				, QNA_PASS
+	 				, QNA_PUBLIC_YN
+	 				, VIEW_NUM
+	 				, QNA_DATE
+	 			) VALUES (
+	 				  fn_create_num(to_char(SYSDATE,'yymmdd'), 'TB_QNA', 'QNA_NUM', UPPER('QNAA'))
+	 				, #{writerId}
+	 				, #{qnaTitle}
+	 				, #{qnaContent}
+	 				, #{qnaPass}
+	 				, #{qnaPublicYn}
+	 				, 0
+	 				, SYSDATE
+	 			)
+	 </insert>
+	 
+	 <!-- QnA 게시판 게시판 리스트 조회 -->
+	 <select id="selectQnABoardList" resultType="qnaVO">
+	 	
+		/* kr.or.ddit.mapper.admin.QnAMapper.selectQnABoardList */
+		SELECT 
+		 	A.*, ROW_NUMBER() OVER (ORDER BY A.ANSWER_DATE) RNUM
+		FROM 
+		 	( SELECT
+			 	  ROWNUM
+			 	, QNA_NUM
+			 	, WRITER_ID
+			 	, QNA_TITLE
+			 	, QNA_PASS
+			 	, TO_CHAR(QNA_DATE, 'yyyy-MM-dd') AS QNA_DATE 
+			 	, VIEW_NUM
+			 	, QNA_PUBLIC_YN
+			 	, ANSWER_TITLE
+			 	, ANSWER_ID
+			 	, to_CHAR(ANSWER_DATE, 'yyyy-MM-dd') AS ANSWER_DATE 
+			 FROM
+		 		TB_QNA
+			 ORDER BY
+	            ANSWER_DATE DESC) A
+		ORDER BY
+			RNUM DESC
+	 </select>
+	 
+	 <!-- QnA 게시판 게시물 읽기 -->
+	 <select id="readQnA" parameterType="string" resultType="qnaVO">
+	 /* kr.or.ddit.mapper.admin.QnAMapper.readQnA */
+	 	SELECT
+	 		QNA_NUM
+	 		, WRITER_ID
+	 		, QNA_TITLE
+	 		, TO_CHAR(QNA_DATE, 'yyyy-MM-dd') AS QNA_DATE
+	 		, VIEW_NUM
+	 	FROM
+	 		TB_QNA
+	 	WHERE
+	 		QNA_NUM = #{qnaNum}
+	 </select>
+
+</mapper>

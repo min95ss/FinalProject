@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<style>
+	#readWrap div{
+		border: solid 1px black;
+		margin: 10px;
+	}
+</style>
+
+<div class="container" id="readWrap">
+	<div class="row">
+		<div class="col-sm-4">
+			문의식별번호 : ${qnaVO.qnaNum }
+		</div>
+		<div class="col-sm-8">
+			제목 : ${qnaVO.qnaTitle }
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			작성자 : ${qnaVO.writerId }
+		</div>
+		<div class="col-sm-4">
+			문의날짜 : ${qnaVO.qnaDate }
+		</div>
+		<div class="col-sm-4">
+			조회수 : ${qnaVO.viewNum }
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			내용 : ${qnaVO.qnaContent }
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			첨부파일 :  
+		</div>
+		<div id="disp">
+			<c:forEach items="${qnaVO.attatchList }" var="imgFile" varStatus="status">
+				<c:if test="${status.index != 0 }">
+					<img alt="image" src="/upload/${imgFile.saveNm}" width=300 height=300 >
+					<a href="/upload/${imgFile.saveNm}" download="/upload/${imgFile.originNm}">다운로딩</a>
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
+</div>
+
+<input type="button" id="listBtn" name="listBtn" value="목록">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function() {
+	const listBtn = $("#listBtn");
+	
+	listBtn.on("click", function() {
+		location.href = "/coco/QnABoard";
+	});
+	
+	
+});
+	
+</script>
+

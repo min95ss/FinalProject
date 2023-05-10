@@ -1,0 +1,18 @@
+package kr.or.ddit.mapper.admin;
+
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import kr.or.ddit.mainpage.vo.QnAVO;
+
+@Mapper
+public interface QnAMapper {
+
+	public int registerQnA(QnAVO qnaVO);
+
+	public List<QnAVO> selectQnABoardList();
+
+	public QnAVO readQnA(QnAVO qnaNum);
+
+	public void incrementView(QnAVO qnaNum);
+
+}

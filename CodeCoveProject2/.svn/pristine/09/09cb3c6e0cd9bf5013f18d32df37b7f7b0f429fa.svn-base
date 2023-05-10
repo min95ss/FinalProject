@@ -1,0 +1,26 @@
+package kr.or.ddit.mainpage.contorller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/coco")
+public class MainVeiwContorller {
+	
+	@GetMapping("/main")
+	public String mainpageView() {
+		return "mainpages/main/content";
+	}
+	
+	@GetMapping("/premium")
+	public String premiumView() {
+		return "mainpages/premium/premium";
+	}
+	
+	@GetMapping("/intro")
+	public String introView() {
+		return "mainpages/intro/intro";
+	}
+	
+}

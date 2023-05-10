@@ -1,0 +1,7 @@
+package kr.or.ddit.mapper.project;
+
+import kr.or.ddit.project.workAssign.vo.workAssignVO;
+
+public interface IWorkAssignMapper {
+	public void register(workAssignVO workAssign);
+}

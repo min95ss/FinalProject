@@ -1,0 +1,14 @@
+package kr.or.ddit.mainpage.service;
+
+import java.util.List;
+import kr.or.ddit.mainpage.vo.QnAVO;
+
+public interface QnAService {
+
+	public int registerQnABoard(QnAVO qnaVO);
+
+	public List<QnAVO> selectQnABoardList();
+
+	public QnAVO readQnA(QnAVO qnaNum);
+
+}

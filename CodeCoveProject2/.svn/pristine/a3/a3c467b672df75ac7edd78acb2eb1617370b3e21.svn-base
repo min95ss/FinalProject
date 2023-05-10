@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.project.IWorkMapper">
+
+	<insert id="register" parameterType="WorkVO">
+		<selectKey keyProperty="workNum" keyColumn="WORK_NUM"
+			order="BEFORE" resultType="String">
+			SELECT fn_create_num(to_char(sysdate,'yymmdd'), 'TB_WORK', 'WORK_NUM', UPPER('WORK'))
+			FROM DUAL
+		</selectKey>
+		insert into tb_work(
+			WORK_NUM, PJ_ID, WORK_REQ, WORK_TITLE, WORK_CONTENT, WORK_STATUS_CODE, WORK_START_DATE, WORK_END_DATE,
+			WORK_PRIORITY, WORK_PROGRESS, PARENT_WORK_NUM, WORK_COLOR, WORK_CREATE_DATE
+		)values(
+			#{workNum}, #{pjId}, #{workReq}, #{workTitle}, #{workContent}, #{workStatusCode}, #{workStartDate}, #{workEndDate},
+			#{workPriority}, #{workProgress}, #{parentWorkNum}, #{workColor}, sysdate
+		)
+	</insert>
+	
+	<select id="list" parameterType="String" resultType="WorkVO">
+		select
+			WORK_NUM, PJ_ID, WORK_REQ, WORK_TITLE, WORK_CONTENT, WORK_STATUS_CODE, WORK_START_DATE, WORK_END_DATE,
+			WORK_PRIORITY, WORK_PROGRESS, PARENT_WORK_NUM, WORK_COLOR, WORK_CREATE_DATE
+		from tb_work
+		where PJ_ID= #{pjId}
+		order by work_create_date desc
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		delete from tb_work
+		where work_num = #{workNum}
+	</delete>
+
+</mapper>

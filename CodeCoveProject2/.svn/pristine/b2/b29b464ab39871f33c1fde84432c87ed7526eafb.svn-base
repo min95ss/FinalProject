@@ -1,0 +1,15 @@
+package kr.or.ddit.expert.service;
+
+import java.util.List;
+
+import kr.or.ddit.expert.vo.ExpertProdVO;
+
+public interface ITemplateListService {
+
+	List<ExpertProdVO> templateList();
+
+	List<ExpertProdVO> templateCategory(ExpertProdVO expProdVO);
+	
+	
+
+}

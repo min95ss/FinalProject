@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<style>
+	#readWrap div{
+		border: solid 1px black;
+		margin: 10px;
+	}
+</style>
+
+<div class="container" id="readWrap">
+	<div class="row">
+		<div class="col-sm-4">
+			문의번호 : 
+		</div>
+		<div class="col-sm-8">
+			제목 : 
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			작성자 : 
+		</div>
+		<div class="col-sm-4">
+			문의날짜 : 
+		</div>
+		<div class="col-sm-4">
+			조회수 : 
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			내용 : 
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			첨부파일 : 
+		</div>
+	</div>
+</div>

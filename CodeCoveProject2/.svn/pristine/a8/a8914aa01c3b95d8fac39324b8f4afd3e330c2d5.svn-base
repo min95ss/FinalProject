@@ -1,0 +1,111 @@
+package kr.or.ddit.common.chat.service.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.common.chat.service.IChatService;
+import kr.or.ddit.common.chat.vo.ChatFile;
+import kr.or.ddit.common.chat.vo.ChatVO;
+import kr.or.ddit.mapper.chat.ChatMapper;
+import kr.or.ddit.member.vo.MemberRole;
+import kr.or.ddit.member.vo.MemberVO;
+
+@Service
+public class ChatServiceImpl implements IChatService {
+	
+	@Inject
+	private ChatMapper chatMapper;
+	
+	
+//	@Override
+//	public void register(ChatFile chatFile) throws Exception {
+//		
+//		String[] files = chatFile.getFiles();
+//		
+//		if(files == null) {
+//			return;
+//		}
+//		
+//		for (String fileName : files) {
+//			
+//			chatMapper.register(fileName);
+//		}
+//		
+//	}
+
+
+	
+	@Override
+	public Map<String, String> roomCheck(String epayNum) {
+		String result = null;
+		
+		ChatVO chatVO = chatMapper.roomCheck(epayNum);
+		
+		if (chatVO != null) {
+			result = "EXIST";
+		} else {
+			result = "NOTEXIST";
+		}
+		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("roomNo", chatVO.getCrNum());
+		resultMap.put("result", result);
+		
+		return resultMap;
+	}
+
+
+	// 구매내역 채팅방 생성
+	@Override
+	public ServiceResult roomCreate(String epayNum) {
+		ServiceResult result = null;
+
+		int status = chatMapper.roomCreate(epayNum);
+		
+		if (status > 0) {
+			result = ServiceResult.OK;
+		} else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+	
+	// 채팅 일반 메세지 insert
+	@Override
+	public ServiceResult chatMsgInsert(ChatVO chatVO) {
+		ServiceResult result = null;
+
+		int status = chatMapper.chatMsgInsert(chatVO);
+		
+		if (status > 0) {
+			result = ServiceResult.OK;
+		} else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+
+	@Override
+	public ServiceResult fileInsert(ChatVO chatVO) {
+		
+		ServiceResult result = null;
+//		String crFile= chatVO.getCrFile();
+
+		int status = chatMapper.fileInsert(chatVO);
+		
+		if (status > 0) {
+			result = ServiceResult.OK;
+		} else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+}

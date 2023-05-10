@@ -1,0 +1,29 @@
+package kr.or.ddit.project.work.vo;
+
+import java.util.List;
+
+import kr.or.ddit.project.colleague.vo.ColleagueVO;
+import kr.or.ddit.project.issue.vo.IssueVO;
+import lombok.Data;
+
+@Data
+public class WorkVO {
+	private String workNum;
+	private String pjId;
+	private String workReq;
+	private String workTitle;
+	private String workContent;
+	private String workStatusCode;
+	private String workStartDate;
+	private String workEndDate;
+	private String workPriority;
+	private String workProgress;
+	private String parentWorkNum;
+	private String workColor;
+	private String workCreateDate;
+	
+	private List<IssueVO> issueList;
+	private List<ColleagueVO> colleagueVOList;
+	
+	private String assignMemId;
+}

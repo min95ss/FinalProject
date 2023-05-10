@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.CooBoardMapper">
+
+	<insert id="insertCooBoard" parameterType="CooBoardVO"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="cooNm" keyColumn="COO_NM"
+			order="BEFORE" resultType="String">
+			SELECT
+			fn_create_num(to_char(sysdate,'yymmdd'), 'TB_COOBOARD', 'COO_NM',
+			UPPER('cobo'))
+			FROM DUAL
+		</selectKey>
+		insert into TB_COOBOARD(
+		coo_nm, writer_id, pj_id, coo_title, coo_content, coo_people_num,
+		coo_start_date
+		, coo_end_date, coo_done_yn, view_num, coo_date
+		)values(
+		#{cooNm},#{writerId},#{pjId},#{cooTitle},#{cooContent},#{cooPeopleNum},#{cooStartDate},
+		#{cooEndDate},#{cooDoneYn},0,sysdate
+		)
+	</insert>
+	
+	<!-- PJ_ADMIN_ID이 가지고 있는 프로젝트들의 상세정보  -->
+	<select id="selectProjList" resultType="ProjectVO">
+		select PJ_ID, PJ_NAME,to_char(PJ_START_DATE, 'yy-mm-dd') PJ_START_DATE, to_char(PJ_END_DATE, 'yy-mm-dd') PJ_END_DATE, PJ_ADMIN_ID, PJ_STATUS_CODE
+			from TB_PROJECT 
+			where PJ_ADMIN_ID= #{memId}
+	</select>
+	
+	<!--PjId에 따른 프로젝트 상세정보  -->
+	<select id="selectPjId" resultType="ProjectVO">
+		select pj_id,pj_name,to_char(PJ_START_DATE, 'yy-mm-dd') PJ_START_DATE, to_char(PJ_END_DATE, 'yy-mm-dd') PJ_END_DATE, PJ_ADMIN_ID, PJ_STATUS_CODE, PJ_PNUM, PJ_PROGRESS
+		    from TB_PROJECT
+		    where PJ_ID= #{pjId}
+	</select>
+
+
+	<!--협업 프로젝트 게시글 목록  -->
+	<select id="selectPjBoList" resultType="CooBoardVO">
+		select 
+		coo_nm, writer_id, pj_id, coo_title, coo_content, coo_people_num,to_char(coo_start_date, 'yy-mm-dd') coo_start_date, to_char(coo_end_date, 'yy-mm-dd') coo_end_date, coo_done_yn, view_num, to_char(coo_date, 'yy-mm-dd') coo_date 
+		from tb_cooboard
+	</select>	
+	
+
+	<!-- service.retrievePost(cooNm); -->
+	<!--아이디, 제목, 내용(첨부파일 포함) 불러오기 -->
+	<resultMap type="CooBoardVO" id="cooMap"
+		autoMapping="true">
+		<id property="cooNm" column="coo_nm" />
+		<collection property="attatchList" ofType="AttatchVO"
+			autoMapping="true" />
+	</resultMap>
+
+	<select id="selectCooBoard" resultMap="cooMap" parameterType="map">
+  select
+		a.coo_nm
+		, a.writer_id
+		, a.coo_title
+		, a.coo_content
+		, a.coo_people_num
+		, to_char(a.coo_start_date, 'yyyy-mm-dd') as coo_start_date
+		, to_char(a.coo_end_date, 'yyyy-mm-dd') as coo_end_date
+		, a.coo_done_yn
+		, to_char(a.coo_date,'yyyy.mm.dd') as coo_date
+		, b.attatch_num
+		, b.attatch_order
+		, b.file_path
+		, b.origin_nm
+		, b.save_nm
+		, b.attatch_type
+		, b.attatch_size
+		, b.attatch_date
+        , c.pj_name
+		from tb_project c
+        left outer join tb_cooboard a
+        on(c.pj_id = a.pj_id)
+		left outer join tb_attatch b on(a.coo_nm = b.attatch_place)
+		where
+		coo_nm = #{cooNm}
+	</select>
+
+
+	<!--게시글 상세보기, 조회수  -->
+	<select id="read" parameterType="String" resultType="CooBoardVO">
+		select
+		coo_nm, writer_id, pj_id, coo_title, coo_content, coo_people_num,
+		coo_start_date, coo_end_date, coo_done_yn, view_num, coo_date
+		where coo_nm=#{cooNm}
+	</select>
+	
+	<update id="incrementHit" parameterType="String">
+		update TB_COOBOARD
+		set
+		view_num=view_num+1
+		where coo_nm=#{cooNm} 
+	</update>
+	
+	<insert id="insertApplyForm" parameterType="CooFormVO">
+		INSERT INTO TB_COOFORM (
+			coo_form_num,		       
+        	applicant_id,     
+        	coo_nm,              
+        	coo_form_content,
+        	coo_assume_attatch
+		) VALUES (
+		fn_create_num(to_char(sysdate,'yymmdd'), 'TB_COOFORM', 'coo_form_num', UPPER('COFO'))
+		, #{applicantId}
+		, #{cooNm}
+		, #{cooFormContent}
+		, #{cooAssumeAttatch, jdbcType=VARCHAR}
+		)
+	</insert>	
+
+</mapper>

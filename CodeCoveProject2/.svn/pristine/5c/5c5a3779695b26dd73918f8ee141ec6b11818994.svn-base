@@ -1,0 +1,9 @@
+package kr.or.ddit.mapper.board;
+
+import kr.or.ddit.board.vo.CooBoardVO;
+
+public interface CooBoardMapper {
+
+	int insertCooBoard(CooBoardVO cooBoardVO);
+
+}

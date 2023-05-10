@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<div class="container">
+	<div class="row">
+		<h3 class="mb-3">문의게시판</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb mb-0">
+				<li class="breadcrumb-item">
+					<a href="index.html">Home</a>
+				</li>
+				<li class="breadcrumb-item active">문의게시판</li>
+				<li class="breadcrumb-item active">글쓰기</li>
+			</ol>
+		</nav>
+	</div>
+	
+	<form id="registerForm" action="/coco/QnARegister" method="post" enctype="multipart/form-data">
+	
+		<div class="row"> 
+			<div class="col-sm-2">제목 : </div>
+			<div class="copl-sm-10">
+				<input type="text" id="qnaTitle" name="qnaTitle" class="form-control" placeholder="제목을 입력해주세요...">
+			</div>
+		</div>
+		
+		<div class="row"> 
+			<div class="col-sm-3">공개여부 : (체크하면 비공개) </div>
+			<div class="copl-sm-3">
+				<input type="checkbox" id="qnaPublicYn" name="qnaPublicYn" class="form-check" value="N">
+			</div>
+			<div class="col-sm-3">비밀번호 : </div>
+			<div class="copl-sm-3">
+				<input type="password" id="qnaPass" name="qnaPass" class="form-control">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="input-group input-group-outline mb-4"> 
+					<textarea class="form-control" rows="20" id="qnaContent" name="qnaContent"></textarea>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div>
+				<h6>첨부파일</h6>
+				<p class="text-sm">업로드 할 파일을 선택해주세요.</p>
+				<div class="input-group input-group-outline">
+					<input type="file" class="form-control" name="qnaFiles" multiple="multiple">
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="row">
+		<button type="button" class="btn btn-primary" id="registerBtn">등록</button>
+		<button type="button" class="btn btn-primary" id="cancelBtn" >취소</button>
+	</div>
+</div>
+
+
+<script src="/resources/ckeditor/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		CKEDITOR.replace("qnaContent", {
+
+		});
+		
+		const registerBtn = $("#registerBtn");
+		const cancelBtn = $("#cancelBtn");
+		const registerForm = $("#registerForm");
+		const qnaPublicYn = $("#qnaPublicYn");
+		
+		qnaPublicYn.on("click", function() {
+			result = "";
+			if($(this).is(":checked")) {
+				result = "N";
+			} else {
+				result = "Y";
+			}
+			qnaPublicYn.val(result);
+		});
+		
+		
+		registerBtn.on("click", function(event) {
+			event.preventDefault();
+			if ($("#qnaTitle").val() == "") {
+				alert("제목을 입력");
+				return false;
+			}
+			if (CKEDITOR.instances.qnaContent.getData() == "") {
+				alert("내용을 입력");
+				return false;
+			}
+			
+			registerForm.submit();
+		});
+		
+		cancelBtn.on("click", function() {
+			location.href = "/coco/QnABoard";
+			registerForm.reset();
+		});
+
+	});
+</script>

@@ -1,0 +1,13 @@
+package kr.or.ddit.mapper.solutions;
+
+import java.util.List;
+
+import kr.or.ddit.expert.vo.ExpertProdVO;
+
+public interface templateListMapper {
+
+	public List<ExpertProdVO> list();
+
+	public List<ExpertProdVO> templateCategory(ExpertProdVO expProdVO);
+
+}

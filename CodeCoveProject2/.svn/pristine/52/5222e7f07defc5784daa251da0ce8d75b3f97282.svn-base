@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<main>
+<p>${myBlogPostVOList }</p>
+	<section class="position-relative">
+		<div class="container py-9 py-lg-11 position-relative z-1">
+			<div id="projects" data-isotope='{"layoutMode": "masonry"}'
+				class="row">
+				<div class="ms-2 flex-grow-1" style="max-width: 180px;">
+					<select name="filter_jobs" id="filter_jobs"
+						class="form-control form-control-sm w-100"
+						data-choices='{"position":"auto","searchEnabled":false,"allowHTML":true,"itemSelectText":""}'>
+						<option value="Most Recent" selected>최신순</option>
+						<option value="Most Relevant">조회수 높은 순</option>
+					</select>
+				</div>
+
+
+				<div style="height: 40px;"></div>
+				<c:choose>
+					<c:when test="${empty myBlogPostList }">
+						<tr>
+							<td colspan="4">게시글이 존재하지 않습니다.</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${myBlogPostList }" var="myBlogPostList">
+							<div class="col-md-6 col-lg-4 mb-4 bootstrap grid-item">
+								<a href="/coco/blogBoard/read/${myBlogPostList.bloggerId}/${myBlogPostList.postNum}" class="card-hover">
+									<div class="overflow-hidden position-relative mb-4">
+										<img src="${myBlogPostList.thumbnail}" alt="" class="img-zoom img-fluid" style="width:280px; height:280px">
+									</div>
+									<h5 class="mb-1">${myBlogPostList.postTitle }</h5>by
+									${myBlogPostList.bloggerId}
+									<p>${myBlogPostList.postDate}　조회수: ${myBlogPostList.postView }</p>
+								</a>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<!-- 페이징 page시작 -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination" style="float: right;">
+					<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+					<li class="page-item active"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
+				${pagingVO.pagingHTMLBS }
+			</nav>
+		</div>
+	</section>
+</main>
+

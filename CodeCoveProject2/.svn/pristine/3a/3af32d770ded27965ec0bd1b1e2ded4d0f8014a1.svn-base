@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.project.JProjectMapper">
+
+	<resultMap type="WorkVO" id="WorkMap">
+		<id property="workNum" column="WORK_NUM"/>
+		<result property="pjId" column="PJ_ID"/>
+		<result property="workReq" column="WORK_REQ"/>
+		<result property="workTitle" column="WORK_TITLE"/>
+		<result property="workContent" column="WORK_CONTENT"/>
+		<result property="workStatusCode" column="WORK_STATUS_CODE"/>
+		<result property="workStartDate" column="WORK_START_DATE"/>
+		<result property="workEndDate" column="WORK_END_DATE"/>
+		<result property="workPriority" column="WORK_PRIORITY"/>
+		<result property="workProgress" column="WORK_PROGRESS"/>
+		<result property="parentWorkNum" column="PARENT_WORK_NUM"/>
+		<result property="workColor" column="WORK_COLOR"/>
+		<result property="workCreateDate " column="WORK_CREATE_DATE"/>
+		<collection property="attatchList" resultMap="attatchMap"></collection>
+	</resultMap>
+
+	<resultMap type="AttatchVO" id="attatchMap">
+		<result property="attatchNum" column="ATTATCH_NUM"/>
+		<result property="attatchOrder" column="ATTATCH_ORDER"/>
+		<result property="attatchPlace" column="ATTATCH_PLACE"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="originNm" column="ORIGIN_NM"/>
+		<result property="saveNm" column="SAVE_NM"/>
+		<result property="attatchType" column="ATTATCH_TYPE"/>
+		<result property="attatchSize" column="ATTATCH_SIZE"/>
+		<result property="downNumber" column="DOWN_COUNT"/>
+		<result property="attatchDate" column="ATTATCH_DATE"/>
+		<result property="uploaderId" column="UPLOADER_ID"/>
+	</resultMap>	
+	
+<!-- 	 work내에 있는 파일 출력 -->
+	<select id="downloadList" parameterType="String" resultMap="WorkMap">
+		SELECT 
+			A.WORK_NUM, 
+			A.WORK_TITLE, 
+			C.SAVE_NM,
+			C.ATTATCH_TYPE,
+            c.origin_nm
+		FROM 
+			TB_WORK A
+		INNER JOIN 
+			TB_ATTATCH C 
+		ON A.WORK_NUM = C.ATTATCH_PLACE
+		WHERE A.WORK_NUM = #{workNum}
+	
+	</select>
+	
+	
+	<!-- 프로젝트 전체 리스트 -->
+	<select id="projectAllList" parameterType="String" resultType="ProjectVO">
+		SELECT 
+		  a.PJ_ID, 
+		  a.PJ_NAME, 
+		  a.PJ_START_DATE, 
+		  a.PJ_END_DATE, 
+		  b.MEM_ID 
+		FROM 
+		  TB_PROJECT a 
+		  INNER JOIN TB_COLLEAGUE b ON a.PJ_ID = b.PJ_ID
+		WHERE 
+		  b.MEM_ID = #{memId}     
+	</select>
+	
+	<!-- 프로젝트 안에 있는 워크리스트 -->
+	<select id="repoWorkList" parameterType="String" resultType="WorkVO">
+		SELECT 
+			WORK_NUM,
+			WORK_TITLE
+		FROM TB_WORK
+		WHERE PJ_ID = #{pjId}
+	</select>
+
+
+
+
+
+
+</mapper>

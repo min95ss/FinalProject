@@ -1,0 +1,737 @@
+
+<!doctype html>
+<html lang="en">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<script src="/resources/assets/js/theme.bundle.min.js"></script>
+
+<head>
+
+
+
+<!------------------------------ 결제하기시작 ---------------------------->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/resources/assets/img/favicon.ico"
+	type="image/ico">
+<!--Box Icons-->
+<link rel="stylesheet"
+	href="/resources/assets/fonts/boxicons/css/boxicons.min.css">
+
+<!--AOS Animations-->
+<link rel="stylesheet"
+	href="/resources/assets/vendor/node_modules/css/aos.css">
+
+<!--Iconsmind Icons-->
+<link rel="stylesheet"
+	href="/resources/assets/fonts/iconsmind/iconsmind.css">
+
+<!--Google fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,400&family=Source+Serif+Pro:ital@0;1&display=swap"
+	rel="stylesheet">
+<!--Prism css snippets-->
+<link rel="stylesheet"
+	href="/resources/assets/vendor/node_modules/css/prism-tomorrow.css">
+<!-- Main CSS -->
+<link href="/resources/assets/css/theme.min.css" rel="stylesheet">
+<!------------------------------ 결제하기끝 ---------------------------->
+
+<!------------------------------- 댓글시작 ----------------------------->
+<!--FavIcon-->
+<link rel="icon" type="image/x-icon"
+	href="/resources/assets/img/favicon.ico">
+<!--Google Fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Chivo:wght@100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0">
+
+<!--Aos Animations-->
+<link href="/resources/assets/vendor/node_modules/css/aos.css"
+	rel="stylesheet">
+
+<!--Main Style-->
+<link href="/resources/assets/css/theme.min.css" rel="stylesheet">
+<!------------------------------- 댓글끝 ----------------------------->
+
+<title>Assan 4</title>
+
+<style type="text/css">
+/*----------------------- 결제하기 스타일 시작------------------------------*/
+.header {
+	background-color: #f1f1f1;
+	padding: 20px;
+	height: 300px;
+	text-align: center;
+}
+
+#top-left {
+	height: 200px;
+	width: 500px;
+	border: solid;
+	color: black;
+}
+
+#top- {
+	height: 200px;
+	width: 500px;
+	border: solid;
+	color: black;
+}
+/*----------------------- 결제하기 스타일 끝--------------------------------*/
+
+/*별점인서트스타일 */
+#myform fieldset {
+	display: inline-block;
+	direction: rtl;
+	border: 0;
+}
+
+#myform fieldset legend {
+	text-align: right;
+}
+
+#myform input[type=radio] {
+	display: none;
+}
+
+#myform label {
+	font-size: 3em;
+	color: transparent;
+	text-shadow: 0 0 0 #f0f0f0;
+}
+
+#myform label:hover {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#myform label:hover ~ label {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+#myform input[type=radio]:checked ~ label {
+	text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+/*        #reviewContents {  */
+/*            width: 100%;  */
+/*            height: 150px;  */
+/*            padding: 10px;  */
+/*            box-sizing: border-box;  */
+/*            border: solid 1.5px #D3D3D3;  */
+/*            border-radius: 5px;  */
+/*            font-size: 16px;  */
+/*            resize: none;  */
+/*        }  */
+
+/* 별점 출력 스타일 */
+
+    .yellow-star {
+        color: #FFCC00;
+    }
+
+</style>
+
+</head>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+
+
+
+<body>
+	<input type="hidden" name="memId" value="${member.memId }">
+	<input type="hidden" name="memNick" value="${member.memNick }">
+
+	<div class="card mb-3 mb-lg-5">
+		<div class="card-header"></div>
+		<div class="card-body">
+			<div class="row" style="height: 350px;">
+				<dl class="col-md-7 mb-4 mb-md-0"
+					style="border: solid 1px black; margin: 30px; margin-left: 250px; height: 290px; width: 500px;">
+					<dd></dd>
+					<dd></dd>
+					<%-- 					<c:forEach items="${expertProd.attatchList}" var="imgFile"> --%>
+					<img src="/upload/${expertProd.attatchList[1].saveNm}" width=100%
+						height=100% alt="image" />
+					<%--   					  <img src="/upload/${expertProd.attatchList[0].saveNm}" width=100% height=100% alt="image"/> --%>
+					<%-- 					</c:forEach> --%>
+					<!-- 						<img src ="" >					 -->
+					<%-- 					<h2 class="mb-1">${attatchVO.filePath}</h2> --%>
+				</dl>
+				<div class="col-md-5"
+					style="border: solid 1px black; margin: 30px; height: 290px; width: 800px;">
+					<dl class="mb-0 lh-lg">
+
+						<dd></dd>
+						<h2 class="mb-1">${expertProd.eprodName}</h2>
+						<dd></dd>
+						<dd>★평점 (4.9/5)</dd>
+						<li class="d-flex align-items-center">
+							<button class="text-body p-0 bg-transparent border-0"
+								type="button">
+								<span class="material-symbols-sharp me-2 align-middle">
+									favorite</span> 찜하기
+							</button> <span> (328) </span>
+
+						</li>
+						<dd>리뷰수</dd>
+						<dd>판매자 : ${member.memNick }</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+
+		</main>
+		<!--///////////Page content wrapper End///////////////-->
+	</div>
+
+	<!-- 탭 네비게이션 -->
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		<li class="nav-item"><a class="nav-link active" id="tab1-tab"
+			data-bs-toggle="tab" data-bs-target="#tab1" role="tab"
+			aria-controls="tab1" aria-selected="true">Tab 1</a></li>
+		<li class="nav-item"><a class="nav-link" id="tab2-tab"
+			data-bs-toggle="tab" data-bs-target="#tab2" role="tab"
+			aria-controls="tab2" aria-selected="false">Tab 2</a></li>
+		<li class="nav-item"><a class="nav-link" id="tab3-tab"
+			data-bs-toggle="tab" data-bs-target="#tab3" role="tab"
+			aria-controls="tab3" aria-selected="false">Tab 3</a></li>
+		<li class="nav-item"><a class="nav-link" id="tab4-tab"
+			data-bs-toggle="tab" data-bs-target="#tab4" role="tab"
+			aria-controls="tab4" aria-selected="false">Tab 4</a></li>
+	</ul>
+
+	<!-- 탭내용 -->
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active" id="tab1" role="tabpanel"
+			aria-labelledby="tab1-tab">
+
+
+
+			<div style="display: flex;">
+				<div
+					style="border: 1px solid black; display: inline-block; height: 2000px; width: 830px; margin: 100px; margin-left: 250px;">
+					<c:forEach items="${expertProd.attatchList}" var="imgFile"
+						varStatus="status">
+						<c:if test="${status.index > 1 }">
+							<img src="/upload/${imgFile.saveNm}" width=300 height=300
+								alt="image" />
+							<%--   					  	<a href="/upload/${imgFile.saveNm}" download="/upload/${imgFile.originNm}">다운로딩</a> --%>
+						</c:if>
+					</c:forEach>
+				</div>
+
+				<!-----------------------------------------------------구매하기시작-------------------------------------------------->
+				<div>
+					<div class="col-lg-4 py-9 py-lg-11 px-4 px-xl-5">
+						<!--Price card-->
+						<div class="card bg-transparent h-100"
+							style="border: solid 1px black; padding: 15px; border-radius: 8px; display: inline-block; width: 400px; height: 600px;">
+							<!--Title-->
+							<h5 class="mb-4">Template</h5>
+							<div class="mb-4">
+								<h2 class="display-3 mb-0">
+									<sup class="fs-6 align-top text-body-secondary lh-1 fw-normal">￦</sup>
+									<span class="price">${expertProd.eprodPrice}</span> <sub
+										class="fs-6 text-body-secondary lh-1 fw-normal align-bottom">
+										/ Monthly</sub>
+								</h2>
+							</div>
+							<!--Description-->
+							<p class="mb-4">Lorem ipsum dolor sit amet, dolore magna
+								aliqua. Duis aute irure dolor in voluptate velit esse cillum
+								dolore eu fugiat nulla pariatur.</p>
+
+							<!--Features-->
+							<h6 class="mb-3">다운로드 횟수</h6>
+							<div class="form-check mb-1">
+								<input class="form-check-input" type="radio" name="eprodGrade"
+									id="templateCount1" value="1" checked="checked"> <label
+									class="form-check-label" for="templateCount"> 1회 </label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input" type="radio" name="eprodGrade"
+									id="templateCount2" value="3"> <label
+									class="form-check-label" for="templateCount"> 3회 </label>
+							</div>
+							<div class="form-check mb-1">
+								<input class="form-check-input" type="radio" name="eprodGrade"
+									id="templateCount3" value="5"> <label
+									class="form-check-label" for="templateCount"> 5회 </label>
+							</div>
+
+							<!--Action-->
+							<div class="pt-4 d-grid">
+								<c:if test="${expertProd.downloadYn<1}">
+									<a href="#!" class="btn btn-outline-primary btn-lg"
+										id="goBuyBtn"> 구매하기 </a>
+								</c:if>
+								<c:if test="${expertProd.downloadYn>0}">
+									<div style="display: inline;">
+										<a href="#!" class="btn btn-outline-primary btn-lg"
+											id="goBuyBtn"> 구매하기 </a> <a
+											href="/upload/${expertProd.attatchList[0].saveNm}"
+											download="/upload/${expertProd.attatchList[0].originNm}"
+											class="btn btn-outline-primary btn-lg" id="goDownloadBtn">
+											템플릿다운로드 </a>
+									</div>
+								</c:if>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-----------------------------------------------------구매하기 끝 -------------------------------------------------->
+			</div>
+		</div>
+		<div class="tab-pane fade" id="tab2" role="tabpanel"
+			aria-labelledby="tab2-tab">
+			<!--------------------------------------------------------- 	댓글시작 ---------------------------------------------------->
+			<a name="target"> </a>
+
+			<div class="border-top px-3 px-lg-5 px-xl-7 py-5 py-lg-8">
+
+				<!--:Add 상품후기 form:-->
+				<h4 class="mb-2">상품 후기 작성</h4>
+				<div class="row">
+					<div class="col-12 mb-4">
+						<!-- 별점시작 -->
+						<form class="mb-3" name="myform" id="myform">
+							<fieldset>
+								<span class="text-bold">별점을 선택해주세요</span> <input type="radio"
+									name="reviewStar" value="5" id="rate1"><label
+									for="rate1">★</label> <input type="radio" name="reviewStar"
+									value="4" id="rate2"><label for="rate2">★</label> <input
+									type="radio" name="reviewStar" value="3" id="rate3"><label
+									for="rate3">★</label> <input type="radio" name="reviewStar"
+									value="2" id="rate4"><label for="rate4">★</label> <input
+									type="radio" name="reviewStar" value="1" id="rate5"><label
+									for="rate5">★</label>
+							</fieldset>
+						</form>
+						<!-- 별점끝 -->
+
+						<textarea rows="5" class="form-control" id="reviewContent"
+							name="reviewContent"></textarea>
+					</div>
+				</div>
+				<div class="d-flex justify-content-end">
+					<button type="button" class="btn btn-primary" id="goInsertReview">등록하기</button>
+				</div>
+			</div>
+		</div>
+
+
+		<div style="margin-left: 250px; margin-right: 250px;">
+			<!--:Likes and comments:-->
+			<ul class="list-unstyled mb-4 list-divided">
+				<li class="d-flex align-items-center">
+					<button class="text-body p-0 bg-transparent border-0" type="button">
+						<span class="material-symbols-sharp me-2 align-middle">
+							favorite </span>
+					</button> <span> 328 </span>
+
+				</li>
+				<li class="d-flex align-items-center"><a
+					data-bs-toggle="collapse" href="#article-comments"> <span
+						class="material-symbols-sharp align-middle me-2">comment</span> 42
+						Comments
+				</a></li>
+			</ul>
+
+<!-- <div id="result"></div> -->
+<table id="resultTable" border="1" style="border-collapse: collapse;"><thead><tr><th>리뷰번호</th><th>리뷰작성자</th><th>리뷰내용</th><th>별점</th><th>작성일</th></tr></thead><tbody></tbody></table>
+			<!--:Comments list:-->
+			<div class="collapse show" id="article-comments">
+				<ul class="list-group list-group-flush list-transparent">
+					<!--:Comment:-->
+					<li class="list-group-item px-0 py-4">
+						<div class="d-flex align-items-stretch">
+							<a href="#!"> <img src="/resources/assets/img/avatar/1.jpg"
+								class="width-4x rounded-pill shadow-sm me-3 flex-shrink-0"
+								alt="">
+							</a>
+							<div class="flex-grow-1">
+								<div
+									class="d-flex mb-2 align-items-center justify-content-between">
+									<div class="overflow-hidden pe-3">
+										<a href="#!" class="mb-0 d-block small fw-bold text-truncate">Monika
+											Smith</a>
+										<ul class="list-unstyled list-divided mb-0 text-muted">
+											<li>21 Dec</li>
+										</ul>
+									</div>
+									<!--:Report icon:-->
+									<button type="button" class="btn text-body p-0"
+										data-tippy-placement="left"
+										data-tippy-content="Report this comment">
+										<span class="material-symbols-sharp fs-6 align-middle">flag</span>
+									</button>
+								</div>
+								<p class="mb-0">Etiam tempor orci eu lobortis elementum nibh
+									tellus. Sed velit dignissim sodales ut eu sem.</p>
+								<!--:Actions:-->
+								<div
+									class="d-flex pt-3 align-items-center justify-content-between">
+									<div
+										class="flex-grow-1 small text-start d-flex align-items-center">
+										<button class="p-0 me-2 bg-transparent text-body border-0"
+											type="button">
+											<span class="material-symbols-sharp fs-6 align-middle">
+												favorite </span>
+										</button>
+										<small> 328 </small>
+										<button
+											class="ms-3 border-0 text-muted bg-transparent replies-collapse"
+											data-bs-toggle="collapse" data-bs-target="#c_reply_1">
+
+											<span>2 replies</span> <span
+												class="material-symbols-sharp fs-6 align-middle">
+												keyboard_arrow_down </span>
+										</button>
+									</div>
+									<div class="flex-grow-1 text-end">
+										<a href="#!" class="small">Reply</a>
+									</div>
+								</div>
+								<!--:Replies:-->
+								<div class="collapse" id="c_reply_1">
+									<ul class="list-group bg-body-tertiary mt-3">
+										<!--:Comment:-->
+										<li class="list-group-item p-3 bg-transparent">
+											<div class="d-flex align-items-stretch mb-3">
+												<a href="#!"> <img
+													src="/resources/assets/img/avatar/1.jpg"
+													class="width-3x rounded-pill shadow-sm me-3 flex-shrink-0"
+													alt="">
+												</a>
+												<div class="flex-grow-1">
+													<div
+														class="d-flex mb-2 align-items-center justify-content-between">
+														<div class="overflow-hidden pe-3">
+															<a href="#!"
+																class="mb-0 d-block small fw-bold text-truncate">Monika
+																Smith</a>
+															<ul class="list-unstyled list-divided mb-0 text-muted">
+																<li>21 Dec</li>
+															</ul>
+														</div>
+														<!--:Report icon:-->
+														<button type="button" class="btn p-0"
+															data-tippy-placement="left"
+															data-tippy-content="Report this comment">
+															<span class="material-symbols-sharp fs-6 align-middle">flag</span>
+														</button>
+													</div>
+													<p class="mb-0">Etiam tempor orci eu lobortis elementum
+														nibh tellus. Sed velit dignissim sodales ut eu sem.</p>
+													<!--:Actions:-->
+													<div
+														class="d-flex pt-2 small align-items-center justify-content-between">
+														<div class="flex-grow-1 text-start">
+															<button class="p-0 text-muted bg-transparent border-0"
+																type="button">
+																<span
+																	class="material-symbols-sharp me-1 fs-6 align-middle">
+																	favorite </span>
+															</button>
+															<small> 124 </small>
+														</div>
+														<div class="flex-grow-1 text-end">
+															<a href="#!" class="small">Reply</a>
+														</div>
+													</div>
+												</div>
+											</div>
+
+
+										</li>
+										<!--:Comment:-->
+										<li class="list-group-item p-3 bg-transparent">
+											<div class="d-flex align-items-stretch mb-3">
+												<a href="#!"> <img
+													src="/resources/assets/img/avatar/3.jpg"
+													class="width-3x rounded-pill shadow-sm me-3 flex-shrink-0"
+													alt="">
+												</a>
+												<div class="flex-grow-1">
+													<div
+														class="d-flex mb-2 align-items-center justify-content-between">
+														<div class="overflow-hidden pe-3">
+															<a href="#!"
+																class="mb-0 d-block small fw-bold text-truncate">Adam</a>
+															<ul class="list-unstyled list-divided mb-0 text-muted">
+																<li>19 Dec</li>
+															</ul>
+														</div>
+														<!--:Report icon:-->
+														<button type="button" class="btn p-0"
+															data-tippy-placement="left"
+															data-tippy-content="Report this comment">
+															<span class="material-symbols-sharp fs-6 align-middle">flag</span>
+														</button>
+													</div>
+													<p class="mb-0">Porttitor leo a diam sollicitudin
+														tempor id eu. Augue lacus viverra vitae congue eu. At in
+														tellus integer feugiat scelerisque varius. Pharetra massa
+														massa ultricies mi quis hendrerit dolor magna eget.</p>
+													<!--:Actions:-->
+													<div
+														class="d-flex pt-2 small align-items-center justify-content-between">
+														<div class="flex-grow-1 text-start">
+															<button class="p-0 text-muted bg-transparent border-0"
+																type="button">
+																<span
+																	class="material-symbols-sharp me-1 fs-6 align-middle">
+																	favorite </span>
+															</button>
+															<small> 124 </small>
+														</div>
+														<div class="flex-grow-1 text-end">
+															<a href="#!" class="small">Reply</a>
+														</div>
+													</div>
+												</div>
+											</div>
+
+
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</li>
+					<!--:Comment:-->
+					<li class="list-group-item px-0 py-4">
+						<div class="d-flex align-items-stretch">
+							<a href="#!"> <img src="/resources/assets/img/avatar/5.jpg"
+								class="width-4x rounded-pill shadow-sm me-3 flex-shrink-0"
+								alt="">
+							</a>
+							<div class="flex-grow-1">
+								<div
+									class="d-flex align-items-center justify-content-between mb-3">
+									<div class="overflow-hidden pe-3">
+										<a href="#!" class="mb-0 d-block small fw-bold text-truncate">Antony
+											Santo</a>
+										<ul class="list-unstyled list-divided mb-0 text-muted">
+											<li>19 Dec</li>
+										</ul>
+									</div>
+									<!--:Report icon:-->
+									<button type="button" class="btn text-body p-0"
+										data-tippy-placement="left"
+										data-tippy-content="Report this comment">
+										<span class="material-symbols-sharp fs-6 align-middle">flag</span>
+									</button>
+								</div>
+								<p class="mb-0">Scelerisque fermentum dui faucibus in
+									ornare. Cras ornare arcu dui vivamus. Odio euismod lacinia at
+									quis risus sed vulputate odio. Vitae auctor eu augue ut lectus
+									arcu.</p>
+								<!--:Actions:-->
+								<div
+									class="d-flex pt-3 align-items-center justify-content-between">
+									<div
+										class="flex-grow-1 small text-start d-flex align-items-center">
+										<button class="p-0 me-2 bg-transparent text-body border-0"
+											type="button">
+											<span class="material-symbols-sharp fs-6 align-middle">
+												favorite </span>
+										</button>
+										<small> 39 </small>
+									</div>
+									<div class="flex-grow-1 text-end">
+										<a href="#!" class="small">Reply</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+
+		</div>
+	</div>
+	<div class="tab-pane fade" id="tab3" role="tabpanel"
+		aria-labelledby="tab3-tab">Tab 3 Content</div>
+	<div class="tab-pane fade" id="tab4" role="tabpanel"
+		aria-labelledby="tab4-tab">Tab 4 Content</div>
+	</div>
+
+
+	<!-- 결제완료 인서트 폼시작 -->
+	<form action="/coco/solution/templateReceipt" method="post"
+		id="paySuccess">
+		<input type="hidden" name="eprodPrice" id="lastPrice" value="">
+		<input type="hidden" name="myEprod" id="myEprod" value="">
+	</form>
+	<!-- 결제완료 인서트 폼 끝 -->
+
+
+
+	<!-- scripts들은 여기에 쓰세요 -->
+
+
+
+	<!-- 템플릿 다운 횟수에 따른 가격변화 시작-->
+	<script type="text/javascript">
+		function updatePrice() {
+		  const selectedCount = document.querySelector('input[name="eprodGrade"]:checked').value;
+		
+		  const totalPrice = ${expertProd.eprodPrice} * selectedCount;
+		
+		  const priceElement = document.querySelector('.price');
+		  
+		  priceElement.innerText = totalPrice;
+		  console.log(document.querySelector('.price').innerHTML);
+		  
+		  $("#lastPrice").val($(".price").html());
+		  console.log("lastPrice값입니다:", $("#lastPrice").val());
+		  
+		}
+		
+		// 라디오 버튼에 이벤트 리스너를 등록합니다.
+		const radioButtons = document.querySelectorAll('input[name="eprodGrade"]');
+		radioButtons.forEach(radioButton => {
+		  radioButton.addEventListener('change', updatePrice);
+		});
+	</script>
+	<!-- 템플릿 다운 횟수에 따른 가격변화 끝-->
+
+
+	<!-- 결제 아작스 시작 -->
+	<script>
+	$("#goBuyBtn").on("click", function() {
+		var price = $('.price').html();
+		var eprodGrade = $('input[name=eprodGrade]:checked').val();
+		
+
+		
+	
+		let data = {
+			buyerId: '${member.memId}', //구매회원 아이디
+			eprodNum:'${expertProd.eprodNum}', // 멘토상품번호
+			eprodName : '${expertProd.eprodName}', // 상품명
+			eprodSummary : '${expertProd.eprodSummary}', //상품설명
+			eprodPrice: price, //상품가격
+			eprodGrade: eprodGrade //상품등급
+			
+			
+		};
+		
+		$.ajax({
+			type:"post",
+			url:"/coco/solution/templateDetail",
+			data:JSON.stringify(data),
+		    contentType:"application/json;charset=utf-8",
+			dataType:"json",
+			success:function(rslt){
+				console.log("항상 서버에서 받은값 먼저확인:",rslt);
+				$("#myEprod").val(rslt.myEprod);
+				$("#lastPrice").val(rslt.eprodPrice);
+				console.log("myEprod값:",$("#myEprod").val());
+			},
+		    error:function(request, status, error) {
+		        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		    }
+		})
+	})
+<!-- 결제 아작스 끝 -->
+
+<!-- 결제 api 시작 -->
+	$("#goBuyBtn").on("click", function() {
+// 		IMP.init("imp33174067"); // 예: imp00000000 아임포트 키
+		IMP.init("imp88057855"); // 예: imp00000000 아임포트 키
+		IMP.request_pay({ // param     
+			pg :"html5_inicis.INIpayTest",
+			pay_method : "card",
+			merchant_uid : "CodeCove" + new Date().getTime(), // 곂치질 않을 고유값
+			name : "${expertProd.eprodName}", // 전문가 이름이나 아이디
+			amount : $('.price').html(), // 가격
+			buyer_email :"keepmm@naver.com",
+			buyer_name :"김주은",
+			buyer_tel :"01064185577"
+			
+
+		}, function(rsp) { // callback
+			if (rsp.success) {
+				console.log('빌링키 발급 성공', rsp)
+				alert('결제가 완료 되었습니다.');
+// 				$("#buyModal").modal("hide"); // 결제후 모달 닫고 서브밋
+				$("#paySuccess").submit();
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+				alert(msg);
+				return false;
+			}
+
+		});
+
+	});
+	<!-- 결제 api 끝 -->
+	</script>
+
+
+	<!-- 리뷰 인서트 아작스 시작 -->
+	<script>
+	$("#goInsertReview").on("click", function() {
+		
+		console.log("상품번호 왜 안 넘어오는데??", "${expertProd.eprodNum}");
+		
+	let data = {
+		eprodNum:'${expertProd.eprodNum}', // 멘토상품번호
+		reviewContent:$("#reviewContent").val(),
+		reviewWriter:'${member.memNick}',
+		reviewStar: $('input[name=reviewStar]:checked').val() // ★ 추가
+	};
+	console.log("data : ",data)
+	
+	$.ajax({
+		type:"post",
+		url:"/coco/solution/templateReview",
+		data:JSON.stringify(data),
+	    contentType:"application/json;charset=utf-8",
+		dataType:"text",
+		success: function(rslt) {
+		    console.log("항상 서버에서 받은값 먼저확인:", rslt);
+		    var data = JSON.parse(rslt);
+		    var reviewStar = data.reviewStar;
+		    var starHtml = '';
+		    for (var i = 0; i < reviewStar; i++) {
+		        starHtml += '<span class="yellow-star">★</span>';
+		    }
+		    for (var i = reviewStar; i < 5; i++) {
+		        starHtml += '<span>☆</span>';
+		    }
+		    var newRow = $("<tr>").append(
+		    	$("<td>").text(data.reviewNum.substring(10)),
+		        $("<td>").text(data.reviewWriter),
+		        $("<td>").text(data.reviewContent),
+		        $("<td>").html(starHtml),
+		        $("<td>").text(data.reviewDate)
+		    );
+		    $("#resultTable").prepend(newRow);
+		},
+
+	    error:function(request, status, error) {
+	        alert("status : " + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+	    }
+	})
+	});
+	</script>
+	<!-- 리뷰 인서트 아작스 끝 -->
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+package kr.or.ddit.expert.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.common.ReportVO;
+import kr.or.ddit.expert.vo.ExpHeartVO;
+import kr.or.ddit.expert.vo.TemplateReviewVO;
+import kr.or.ddit.mapper.solutions.ReviewMapper;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Service
+public class TemplateReviewServiceImpl implements ITemplateReviewService {
+
+	@Inject
+	ReviewMapper mapper;
+	
+	
+	@Override
+	public void reviewInsert(TemplateReviewVO templateReviewVO) {
+		mapper.templateReviewInsert(templateReviewVO);
+	}
+
+
+	@Override
+	public List<TemplateReviewVO> templateReviewList(String eprodNum) {
+		return mapper.templateReviewList(eprodNum);
+	}
+
+
+	@Override
+	public void templateHeartInsert(ExpHeartVO expHeartVO) {
+		mapper.templateHeartInsert(expHeartVO);
+	}
+
+
+	@Override
+	public void templateHeartDelete(ExpHeartVO expHeartVO) {
+		mapper.templateHeartDelete(expHeartVO);
+		
+	}
+
+
+	@Override
+	public int isHeart(ExpHeartVO expHeartVO) {
+		int heartCheck = mapper.isHeart(expHeartVO);
+		log.debug("heart가 몇개야?"+heartCheck);
+		
+		return heartCheck;
+	}
+
+
+	@Override
+	public int isReview(TemplateReviewVO templateReviewVO) {
+		int reviewCheck = mapper.isReview(templateReviewVO);
+		log.debug("리뷰 몇 개 썼어?" + reviewCheck);
+		return reviewCheck;
+	}
+
+
+	@Override
+	public void reportInsert(ReportVO reportVO) {
+		mapper.reportInsert(reportVO);
+		
+	}
+
+
+	@Override
+	public int isReport(ReportVO reportVO) {
+		int reportCheck = mapper.isReport(reportVO);
+		return reportCheck;
+	}
+
+}

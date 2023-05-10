@@ -1,0 +1,74 @@
+package kr.or.ddit.mainpage.contorller;
+
+import java.util.List;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import kr.or.ddit.common.attatch.service.AttatchService;
+import kr.or.ddit.mainpage.service.QnAService;
+import kr.or.ddit.mainpage.vo.QnAVO;
+import kr.or.ddit.member.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/coco")
+public class CSController {
+	
+	@Inject
+	private QnAService qnaService;
+	
+	@Inject
+	private AttatchService attachService;
+	
+	@GetMapping("/QnABoard")
+	public String QnABoardList(Model model) {
+		List<QnAVO> qnaList = qnaService.selectQnABoardList();
+		
+		model.addAttribute("qnaList", qnaList);
+		return "mainpages/QnA/ListQnABoard";
+	}
+	
+	@GetMapping("/QnARegisterForm")
+	public String QnABoardRegisterForm() {
+		return "mainpages/QnA/RregisterQnAForm";
+	}
+	
+	@PostMapping("/QnARegister")
+	public String QnABoardRegister(HttpServletRequest req, @ModelAttribute("qnaVO") QnAVO qnaVO) {
+		String goPage = "";
+		HttpSession session = req.getSession();
+		MemberVO memberVO = (MemberVO)session.getAttribute("SessionInfo");
+		
+		if(memberVO == null) {
+			goPage = "redirect:/coco/login";
+		} else {
+			qnaVO.setWriterId(memberVO.getMemId());
+			int cnt = qnaService.registerQnABoard(qnaVO);
+			if(cnt > 0) {
+				goPage = "redirect:/coco/QnABoard";
+			} else {
+				goPage = "/coco/QnARegisterForm";
+			}
+		}
+		return goPage;
+	}
+	
+	@GetMapping("/QnABoardRead")
+	public String QnABoardRead(HttpServletRequest req, QnAVO qnaNum, Model model) {
+		HttpSession session = req.getSession();
+		MemberVO memberVO = (MemberVO)session.getAttribute("SessionInfo");
+		QnAVO qnaVO = qnaService.readQnA(qnaNum);
+		
+		model.addAttribute("qnaVO", qnaVO);
+		return "mainpages/QnA/ReadQnABoard";
+	}
+	
+	
+}

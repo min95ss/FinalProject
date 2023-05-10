@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/resources/assets/img/favicon.ico" type="image/ico">
+        <!--Box Icons-->
+        <link rel="stylesheet" href="/resources/assets/fonts/boxicons/css/boxicons.min.css">
+
+        <!--AOS Animations-->
+        <link rel="stylesheet" href="/resources/assets/vendor/node_modules/css/aos.css">
+
+        <!--Iconsmind Icons-->
+        <link rel="stylesheet" href="/resources/assets/fonts/iconsmind/iconsmind.css">
+
+        <!--Google fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,400&family=Source+Serif+Pro:ital@0;1&display=swap" rel="stylesheet">
+        
+        <!-- Main CSS -->
+        <link href="/resources/assets/css/theme.min.css" rel="stylesheet">
+
+        <title>Assan 4</title>
+
+        <style type="text/css">
+        .parent-element {
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		}
+		
+		#introduce{
+
+  height:300px;
+		}
+        </style>
+    </head>
+
+    <body>
+
+        <!--Main content-->
+
+        <main class="main-content" id="main-content">
+
+            <section class="position-relative">
+                <div class="container position-relative">
+                    <div class="">
+
+                        <!--Profile info header-->
+                        <div class="position-relative pt-9 pb-9 pb-lg-11">
+                            <div class="row">
+
+                                <div class="col-lg-9">
+                                            <h5 class="mb-4">Profile Details</h5>
+
+                                            <div class="row align-items-center"><!-- 두 줄 정렬 -->
+
+                                                <div class="row align-items-center"><!-- 두 줄 정렬 -->
+											    <div class="col-md-6 mb-3 d-flex justify-content-center align-items-center">
+											        <div class="width-15x height-15x mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
+											            style="background-image: url(/resources/assets/img/avatar/4.jpg);">
+											        </div>
+											    </div>
+											    <div class="col-md-6 mb-3">
+											        <div class="row">
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Name</label>
+											                <div class="form-control">Emily Doe</div>
+											            </div>
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Email address</label>
+											                <div class="form-control">info@emilydoe.com</div>
+											            </div>
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Phone</label>
+											                <div class="form-control">+34 1234 567 890</div>
+											            </div>
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Company</label>
+											                <div class="form-control">Assan inc.</div>
+											            </div>
+											        </div>
+											    </div>
+											    <div class="col-md-6 mb-3 d-flex justify-content-center align-items-center">
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Name</label>
+											                <div class="form-control" id="introduce">Emily Doe</div>
+											            </div>
+											    </div>
+											    <div class="col-md-6 mb-3">
+											        <div class="row">
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Name</label>
+											                <div class="form-control">Emily Doe</div>
+											            </div>
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Email address</label>
+											                <div class="form-control">info@emilydoe.com</div>
+											            </div>
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Phone</label>
+											                <div class="form-control">+34 1234 567 890</div>
+											            </div>
+											            <div class="col-md-12 mb-3">
+											                <label class="form-label">Company</label>
+											                <div class="form-control">Assan inc.</div>
+											            </div>
+											        </div>
+											    </div>
+                                                
+                                                
+                                                
+                                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+       
+
+
+        <!-- begin Back to Top button -->
+        <a href="#" class="toTop">
+            <i class="bx bxs-up-arrow"></i>
+        </a>
+        <!-- scripts -->
+        <script src="/resources/assets/js/theme.bundle.min.js"></script>
+
+       
+    </body>
+
+</html>

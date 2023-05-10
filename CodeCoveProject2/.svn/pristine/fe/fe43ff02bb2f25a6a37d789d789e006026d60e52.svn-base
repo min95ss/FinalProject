@@ -1,0 +1,82 @@
+package kr.or.ddit.admin.controller;
+
+import java.util.List;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.admin.service.ComcodeService;
+import kr.or.ddit.admin.service.ExpertService;
+import kr.or.ddit.admin.vo.ComCodeVO;
+import kr.or.ddit.member.vo.ExpertVO;
+import oracle.jdbc.proxy.annotation.Post;
+
+@Controller
+@RequestMapping("/coco/admin")
+public class ExpertPermissionContorller {
+
+	@Inject
+	private ExpertService expService;
+	
+	@Inject
+	private ComcodeService codeService;
+	
+	@GetMapping("/expApplyList")
+	public String expApplyList(Model model) {
+		String comCodeGrp = "APPROVAL";
+		List<ExpertVO> expList = expService.selectExpList();
+		List<ComCodeVO> codeList = codeService.callCodeList(comCodeGrp);
+		
+		model.addAttribute("codeList", codeList);
+		model.addAttribute("expList", expList);
+		return "admins/expApply/listExpApply"; 
+	}
+	
+	@GetMapping("/expApplyDetail")
+	public String expApplyDetail(String expFormNum, Model model) {
+		String comCodeGrp = "APPROVAL";
+		List<ComCodeVO> codeList = codeService.callCodeList(comCodeGrp);
+		
+		ExpertVO expertVO = expService.selectExpform(expFormNum);
+		
+		model.addAttribute("codeList", codeList);
+		model.addAttribute("expertVO", expertVO);
+		return "admins/expApply/detailExpApply";
+	}
+	
+	@PostMapping("/registExpert")
+	public String registExpert(HttpServletRequest req, ExpertVO expertVO, Model model) {
+		String goPage = "";
+		HttpSession session = req.getSession();
+		
+		ServiceResult result = expService.registerExpert(req, expertVO);
+		if (result.equals(ServiceResult.OK)) {
+			goPage = "redirect:/coco/admin/expApplyList";
+		} else {
+			goPage = "redirect:/coco/admin/expApplyDetail?expFormNum=" + expertVO.getExpFormNum();
+		}
+		
+		return goPage;
+	}
+	
+	@PostMapping("/refuseExpert")
+	public String refuseExpert(HttpServletRequest req, ExpertVO expertVO, Model model) {
+		String goPage = "";
+		HttpSession session = req.getSession();
+		
+		ServiceResult result = expService.refuseExpert(req, expertVO);
+		if (result.equals(ServiceResult.OK)) {
+			goPage = "redirect:/coco/admin/expApplyList";
+		} else {
+			goPage = "redirect:/coco/admin/expApplyDetail?expFormNum=" + expertVO.getExpFormNum();
+		}
+		
+		return goPage;
+	}
+	
+}

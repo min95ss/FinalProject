@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.board.CooBoardMapper">
+
+	<insert id="insertCooBoard" parameterType="CooBoardVO"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="cooNm" keyColumn="COO_NM"
+			order="BEFORE" resultType="String">
+			SELECT
+			fn_create_num(to_char(sysdate,'yymmdd'), 'TB_COOBOARD', 'COO_NM',
+			UPPER('cobo'))
+			FROM DUAL
+		</selectKey>
+		insert into TB_COOBOARD(
+		coo_nm, writer_id, pj_id, coo_title, coo_content, coo_people_num,
+		coo_start_date
+		, coo_end_date, coo_done_yn, view_num, coo_date
+		)values(
+		#{cooNm},#{writerId},#{pjId},#{cooTitle},#{cooContent},#{cooPeopleNum},#{cooStartDate},
+		#{cooEndDate},#{cooDoneYn},0,sysdate
+		)
+	</insert>
+	
+	<!-- PJ_ADMIN_ID이 가지고 있는 프로젝트들의 상세정보  -->
+	<select id="selectProjList" resultType="ProjectVO">
+		select PJ_ID, PJ_NAME,to_char(PJ_START_DATE, 'yy-mm-dd') PJ_START_DATE, to_char(PJ_END_DATE, 'yy-mm-dd') PJ_END_DATE, PJ_ADMIN_ID, PJ_STATUS_CODE
+			from TB_PROJECT 
+			where PJ_ADMIN_ID= #{memId}
+	</select>
+	
+	<!--PjId에 따른 프로젝트 상세정보  -->
+	<select id="selectPjId" resultType="ProjectVO">
+		select PJ_ID,PJ_NAME,to_char(PJ_START_DATE, 'yy-mm-dd') PJ_START_DATE, to_char(PJ_END_DATE, 'yy-mm-dd') PJ_END_DATE, PJ_ADMIN_ID, PJ_STATUS_CODE, PJ_PNUM, PJ_PROGRESS
+		    from TB_PROJECT
+		    where PJ_ID= #{pjId}
+	</select>
+
+
+	<!--협업 프로젝트 게시글 목록  -->
+	<select id="selectPjBoList" resultType="CooBoardVO">
+		select 
+		COO_NM, WRITER_ID, PJ_ID, COO_TITLE, COO_CONTENT, COO_PEOPLE_NUM, COO_START_DATE, COO_END_DATE, COO_DONE_YN, VIEW_NUM, COO_DATE
+		from TB_COOBOARD
+	</select>	
+	
+	
+
+	<!--아이디, 제목, 내용(첨부파일 포함) 불러오기 -->
+<!-- 	<resultMap type="CooBoardVO" id="cooMap" -->
+<!-- 		autoMapping="true"> -->
+<!-- 		<id property="cooNm" column="coo_nm" /> -->
+<!-- 		<collection property="attatchList" ofType="AttatchVO" -->
+<!-- 			autoMapping="true" /> -->
+<!-- 	</resultMap> -->
+
+<!-- 	<select id="selectCooBoard" resultMap="cooMap" parameterType="map"> -->
+<!-- 		select -->
+<!-- 		a.coo_nm -->
+<!-- 		, a.writer_id -->
+<!-- 		, a.coo_title -->
+<!-- 		, a.coo_content -->
+<!-- 		, a.coo_people_num -->
+<!-- 		, a.coo_start_date -->
+<!-- 		, a.coo_end_date -->
+<!-- 		, a.coo_done_yn -->
+<!-- 		, to_char(a.coo_date,'yyyy.mm.dd hh24:mi') as coo_date -->
+<!-- 		, b.attatch_num -->
+<!-- 		, b.attatch_order -->
+<!-- 		, b.file_path -->
+<!-- 		, b.origin_nm -->
+<!-- 		, b.save_nm -->
+<!-- 		, b.attatch_type -->
+<!-- 		, b.attatch_size -->
+<!-- 		, b.attatch_date -->
+<!-- 		from tb_cooboard a -->
+<!-- 		left outer join tb_attatch b on(a.coo_nm = b.attatch_place) -->
+<!-- 		where -->
+<!-- 		coo_nm = #{cooNm} -->
+<!-- 	</select> -->
+
+
+</mapper>
+
+
+
+
+
+
+

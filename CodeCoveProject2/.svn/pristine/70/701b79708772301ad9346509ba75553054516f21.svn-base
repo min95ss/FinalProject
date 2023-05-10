@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.chat.ChatMapper">
+
+<!-- 	<insert id="register" parameterType="String"> -->
+<!-- 		insert into chatfile( -->
+<!-- 			fullname, room_id, regdate -->
+<!-- 		) values ( -->
+<!-- 			#{fullName}, seq_chat.nextval, sysdate -->
+<!-- 		) -->
+<!-- 	</insert> -->
+	
+	<select id="roomCheck" parameterType="String" resultType="ChatVO">
+	   select cr_num, cr_create_date, cr_id
+	   from tb_chatroom
+	   where cr_id = #{epayNum}
+	</select>
+	
+	<insert id="roomCreate" parameterType="int">
+	   insert into TB_CHATROOM(
+       	 CR_NUM, CR_CREATE_DATE, CR_ID
+     	 )VALUES (
+         fn_create_num(to_char(sysdate,'yymmdd'), 'TB_CHATROOM', 'CR_NUM', UPPER('CHAT'))
+         , SYSDATE
+         , #{epayNum}
+          )
+	</insert>
+	
+	<insert id="chatMsgInsert" parameterType="ChatVO">
+	   insert into TB_CHAT (
+         CR_CONTENT_NUM, CR_NUM, CR_CONTENT, CR_DATE, MEM_ID
+	   ) values (
+	        fn_create_num(to_char(sysdate,'yymmdd'), 'TB_CHAT', 'CR_CONTENT_NUM', UPPER('CHRO'))
+	        , #{crNum}
+	        , #{crContent}
+	        , SYSDATE
+	        , #{memId}
+	   )
+	</insert>
+	
+	<insert id="fileInsert" parameterType="ChatVO">
+	   insert into TB_CHAT (
+         CR_CONTENT_NUM, CR_NUM, CR_DATE, CR_FILE, MEM_ID
+	   ) values (
+	        fn_create_num(to_char(sysdate,'yymmdd'), 'TB_CHAT', 'CR_CONTENT_NUM', UPPER('CHRO'))
+	        , #{crNum}
+	        , SYSDATE
+	        , #{crFile}
+	        , #{memId}
+	   )
+	</insert>
+	
+	
+</mapper>

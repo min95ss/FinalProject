@@ -1,0 +1,11 @@
+package kr.or.ddit.expert.service;
+
+import kr.or.ddit.expert.vo.TemplateReviewVO;
+
+public interface ITemplateReviewService {
+
+	public void reviewInsert(TemplateReviewVO templateReviewVO);
+
+	
+	
+}

@@ -1,0 +1,25 @@
+package kr.or.ddit.common.chat.service;
+
+import java.util.Map;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.common.chat.vo.ChatFile;
+import kr.or.ddit.common.chat.vo.ChatVO;
+
+public interface IChatService {
+
+//	public void register(ChatFile chatFile) throws Exception;
+
+	public Map<String, String> roomCheck(String epayNum);
+
+	// 구매내역 채팅방 생성
+	public ServiceResult roomCreate(String epayNum);
+
+	// 채팅 일반 메세지 insert
+	public ServiceResult chatMsgInsert(ChatVO chatVO);
+
+	// 파일 insert
+	public ServiceResult fileInsert(ChatVO chatVO);
+
+	
+}

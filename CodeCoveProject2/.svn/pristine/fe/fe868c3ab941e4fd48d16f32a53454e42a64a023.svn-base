@@ -1,0 +1,26 @@
+package kr.or.ddit.project.project.vo;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class ProjectVO {
+	private String pjId;
+	private String pjCreatorId;
+	private String pjName;
+	private String pjPnum;
+	private String pjStartDate;
+	private String pjEndDate;
+	private String pjObjTitle;
+	private String pjCreateDate;
+	private String pjAdminId;
+	private String pjAdminUpdate;
+	private String pjStatusCode;
+	private String pjProgress;
+	
+	private String comCode;
+	private String comCodeNm;
+}

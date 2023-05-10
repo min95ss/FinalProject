@@ -1,0 +1,83 @@
+package kr.or.ddit.common.chat.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.common.chat.service.IChatService;
+import kr.or.ddit.common.chat.vo.ChatVO;
+import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.member.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequestMapping("/coco/project")
+@Controller
+public class AlarmController {
+
+	@Inject
+	private IChatService chatService;
+
+	@Inject
+	private IMemberService memberService;
+
+
+    @Resource(name = "uploadPath")
+    private String uploadPath;
+    
+    
+    // 프로젝트 채팅
+	@RequestMapping(value="/chatProject", method = RequestMethod.GET) 
+//	@RequestMapping(value="/chatProject", method = RequestMethod.GET) 
+	public String chatProject(Model model, HttpServletRequest req) {
+		
+		HttpSession session = req.getSession();
+		
+		MemberVO sessionMember = (MemberVO) session.getAttribute("SessionInfo");
+		
+		MemberVO member = memberService.selectMember(sessionMember);
+		
+		// 가입한 프로젝트 다 들고오기
+		List<ChatVO> chatRoomList = chatService.selectChatRoomList(sessionMember.getMemId());
+		
+		// crNum을 가지고와야함
+//		List<ChatVO> chatVOList = chatService.selectChatlog(crNum);
+//		
+//		model.addAttribute("crNum", crNum);
+		model.addAttribute("member", member);
+//		model.addAttribute("chatList", chatVOList);
+//		model.addAttribute("sellerNick", sellerNick); // 판매자 닉네임
+		model.addAttribute("chatRoomList", chatRoomList); // 가입한 프로젝트 다 들고오기
+		
+		return "chat/alarm/chatProject";
+	}
+	
+	
+	
+	// 채팅방 중복체크
+	@ResponseBody
+	@PostMapping(value = "/selectChatLogsPj", produces = "application/json;charset=utf-8")
+	public List<ChatVO> selectChatLogsProject(@RequestParam String crNum) throws Exception {
+		
+		log.debug("crNum 확인용 " + crNum);
+		
+		List<ChatVO> chatVOList = chatService.selectChatlog(crNum);
+		
+		// 이거 만들어놓은거 전송되는지 확인 insert한 후에 하기
+		return chatVOList;
+	}
+	
+	
+}

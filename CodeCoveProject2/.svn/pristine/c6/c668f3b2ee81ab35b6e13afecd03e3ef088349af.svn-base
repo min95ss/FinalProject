@@ -1,0 +1,48 @@
+package kr.or.ddit.mainpage.vo;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import kr.or.ddit.common.AttatchVO;
+import lombok.Data;
+
+@Data
+public class QnAVO {
+	
+	private String RNUM;
+	
+	private String qnaNum;
+	private String writerId;
+	private String qnaTitle;
+	private String qnaContent;
+	private String qnaPass;
+	private String qnaPublicYn;
+	private String answerTitle;
+	private String answerContent;
+	private String viewNum;
+	private String answerId;
+	private String delYn;
+	private String qnaDate;
+	private String answerDate;
+	
+	private List<AttatchVO> attatchList;
+	private String attatchNum;
+	
+	private MultipartFile[] qnaFiles;
+	
+	public void setQnAFiles(MultipartFile[] qnaFiles) {
+		if(qnaFiles == null || qnaFiles.length == 0 ) {
+			return;
+		}
+		this.qnaFiles = qnaFiles;
+		this.attatchList = new ArrayList<>();
+		for (MultipartFile single : qnaFiles) {
+			if(single.isEmpty()) 
+				continue;
+			attatchList.add(new AttatchVO(single));
+		}
+	}
+
+	private Object jsonObject;
+	
+}

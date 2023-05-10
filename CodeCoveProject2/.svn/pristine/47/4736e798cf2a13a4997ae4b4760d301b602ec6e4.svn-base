@@ -1,0 +1,265 @@
+<!doctype html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/resources/assets/img/favicon.ico" type="image/ico">
+<link rel="stylesheet" href="/resources/assets/vendor/node_modules/css/choices.min.css">
+<link rel="stylesheet" href="/resources/assets/vendor/node_modules/css/simplebar.min.css">
+<link rel="stylesheet" href="/resources/assets/vendor/node_modules/css/nouislider.min.css">
+<!--Icons-->
+<link href="/resources/assets/fonts/boxicons/css/boxicons.min.css" rel="stylesheet">
+<!--Google fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+<!-- Main CSS -->
+<link href="/resources/assets/css/theme-shop.min.css" rel="stylesheet">
+
+<!--:Simplebar css ()-->
+<style type="text/css">
+.simplebar-track.simplebar-vertical {
+	width: 7px;
+}
+
+.simplebar-scrollbar:before {
+	background: currentColor;
+}
+</style>
+<title>Assan Shop</title>
+</head>
+
+<body>
+
+<!-- 여기가 헤더 header start -->
+<!-- 여기가 헤더 header end -->
+
+<!--Main content-->
+	<main>
+
+		<!--Page header start-->
+		<section class="position-relative">
+			<div class="container py-9 py-lg-11 position-relative">
+				<div class="row justify-content-between">
+					<div class="col-md-3">
+						<!--:Sidebar widget card-->
+						<div class="mt-5">
+							<!--:Title-->
+							<div>
+								<h6 class="mb-3">
+									<a href="/template/main" class="nav-link small">All Template</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="/template/category?tCategory=admin" class="nav-link small">Admin Template</a>
+<!-- 									<a href="/template/category?tCategory=" name="admin" class="nav-link small">Admin Template</a> -->
+								</h6>
+								<h6 class="mb-3">
+									<a href="/template/category?tCategory=multipurpose" class="nav-link small">Multipurpose Template</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Landing Pages</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Porfolios & Resumes</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Ecommerce</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Blogs & Magazines</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Directories & Listings</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">UI Kits & Website
+										Builders</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Documentation</a>
+								</h6>
+								<h6 class="mb-3">
+									<a href="#" class="nav-link small">Miscellaneous</a>
+								</h6>
+							</div>
+						</div>
+					</div>
+
+					<!--Products column-->
+					<div class="col-md-9 pt-5">
+						<!--Products top bar-->
+						<!--     태그서치 -->
+						<nav
+							class="navbar navbar-search-w-icons position-sticky shadow top-0 z-fixed navbar-expand-lg navbar-light bg-body">
+							<div class="container-fluid position-relative">
+								<a class="navbar-brand" href="index.html"> 
+									<img src="/resources/assets/img/logo/logo-shop-white.svg" alt="" class="img-fluid navbar-brand-dark">
+								</a>
+								<div class="row align-items-center">
+									<div class="col-lg-auto mb-3 mb-lg-0">
+										<h6 class="mb-1">Popular keywords</h6>
+									</div>
+
+
+									<div class="col-lg mb-3 mb-lg-0">
+										<div class="d-flex flex-wrap">
+											<a href="/template/category?tCategory=${param.tCategory }&tTag1=bootstrap3&tTag2=${param.tTag2}"
+												class="btn btn-sm rounded-pill btn-secondary me-2 mb-2">Bootstrap3</a>
+											<a href="/template/category?tCategory=${param.tCategory }&tTag1=bootstrap4&tTag2=${param.tTag2}"
+												class="btn btn-sm rounded-pill btn-secondary me-2 mb-2">Bootstrap4</a>
+											<a href="/template/category?tCategory=${param.tCategory }&tTag1=bootstrap5&tTag2=${param.tTag2}"
+												class="btn btn-sm rounded-pill btn-secondary me-2 mb-2">Bootstrap5</a>
+											<a href="/template/category?tCategory=${param.tCategory }&tTag1=${param.tTag1}&tTag2=pay"
+												class="btn btn-sm rounded-pill btn-secondary me-2 mb-2">유료</a>
+											<a href="#!"
+												class="btn btn-sm rounded-pill btn-secondary me-2 mb-2">무료</a>
+										</div>
+									</div>
+								</div>
+
+								<div class="collapse collapse-search ms-xl-auto ms-lg-3 me-lg-1 d-lg-block" style="-navbar-search-width: 280px;" id="searchCollapse">
+									<form action="#">
+										<div class="position-relative mt-3 mt-lg-0">
+											<span class="position-absolute start-0 top-50 translate-middle-y ms-3 opacity-50">
+												<i class="bx bx-search-alt-2"></i>
+											</span> <input type="text" placeholder="Search Products..."
+												class="form-control ps-6 rounded-pill">
+											<!--                          With Submit button -->
+											<button
+												class="btn position-absolute end-0 top-0 flex-center p-0 width-4x h-100 rounded-pill btn-white">
+												<i class="bx bx-search-alt-2"></i>
+											</button>
+<!-- 											<input type="text" placeholder="Search here..." -->
+<!-- 												class="form-control border-0 shadow-none ps-4 pe-6 rounded-pill"> -->
+
+										</div>
+									</form>
+								</div>
+							</div>
+						</nav>
+						<!--       태그서치끝 -->
+						<div class="row mb-5">
+<!-- 그리드출력						 -->
+			<c:choose>
+				<c:when test="${empty list }">
+					<tr>
+						<td colspan="4">조회하실 게시물이 존재하지 않습니다.</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${list}" var="list">
+							<div class="col-md-6 col-xl-4 mb-4">
+								<!--:card-hover-expand-->
+								<div class="card overflow-hidden hover-lift card-product">
+									<div
+										class="card-product-header p-3 d-block overflow-hidden position-relative">
+										<a href="#!"> 
+											<img src="/resources/assets/img/shop/products/10.jpg" class="img-fluid rounded" alt="Product">
+										</a>
+									</div>
+									<div class="card-product-body p-3 pt-0 text-center">
+										<a href="#!"
+											class="fs-5 fw-semibold d-block position-relative mb-2">${list.tTitle }</a>
+										<div class="card-product-body-overlay">
+											<span class="card-product-price"> 
+												<span>${list.tPrice }</span> 
+												<del class="text-body-secondary">$199</del>
+											</span> 
+											<span class="card-product-view-btn"> 
+												<a href="#!" class="link-underline mb-1 fw-semibold">View Details</a>
+											</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+					</c:forEach>
+				</c:otherwise>				
+			</c:choose>							
+						</div>
+
+
+
+						<!-- 페이징 page시작 -->
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item disabled"><a class="page-link"
+									href="#">Previous</a></li>
+								<li class="page-item active"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">Next</a></li>
+							</ul>
+						</nav>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+	</main>
+
+
+
+
+	<!-- begin:Back to top -->
+<!-- 	<a href="#top" class="toTop"> <i -->
+<!-- 		class="bx bxs-up-arrow align-middle lh-1"></i> -->
+<!-- 	</a> -->
+	<!-- end:Back to top -->
+
+
+	<!-- scripts -->
+	<script src="/resources/assets/js/theme.bundle.min.js"></script>
+
+
+	<!--Select scripts-->
+	<script src="/resources/assets/vendor/node_modules/js/choices.min.js"></script>
+	<script>
+      var el = document.querySelectorAll("[data-choices]");
+      el.forEach(e => {
+        const t = {
+          ...e.dataset.choices ? JSON.parse(e.dataset.choices) : {},
+          ...{
+            classNames: {
+              containerInner: e.className,
+              input: "form-control",
+              inputCloned: "form-control-xs",
+              listDropdown: "dropdown-menu",
+              itemChoice: "dropdown-item",
+              activeState: "show",
+              selectedState: "active"
+            }
+          }
+        }
+        new Choices(e, t)
+      });
+
+    </script>
+	<!--Custom scrollbar simplebar-->
+	<script src="/resources/assets/vendor/node_modules/js/simplebar.min.js"></script>
+
+	<!--Pricing range-->
+	<script
+		src="/resources/assets/vendor/node_modules/js/nouislider.min.js"></script>
+	<script>
+      document.querySelectorAll("[data-range]").forEach(function (e) {
+        const t = JSON.parse(e.dataset.range),
+          n = document.getElementById("range-min"),
+          r = document.getElementById("range-max");
+        noUiSlider.create(e, t);
+        e.noUiSlider.on("update", function (e, t) {
+          t ? r.innerHTML = e[t] : n.innerHTML = e[t];
+        });
+      });
+
+    </script>
+</body>
+
+</html>

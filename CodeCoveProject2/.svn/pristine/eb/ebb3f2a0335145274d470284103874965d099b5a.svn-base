@@ -1,0 +1,83 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+
+<h3>멘토신청 디테일</h3>
+
+<form id="expAppfrm" method="post" action="/coco/admin/registExpert">
+	<input type="hidden" id="expFormNum" name="expFormNum" value="${expertVO.expFormNum }">
+	<input type="hidden" id="expertId" name="expertId" value="${expertVO.formId }">
+	<input type="hidden" id="presentation" name="presentation" value="${expertVO.expFormContent }">
+	<input type="hidden" id="assume" name="assume" value="${expertVO.expFormAssume }">
+	<table border="1">
+		<tbody>
+			<tr>
+				<th>신청번호 : </th>
+				<td>${expertVO.expFormNum }</td>
+			</tr>
+			<tr>
+				<th>회원ID : </th>
+				<td>${expertVO.formId }</td>
+			</tr>
+			<tr>
+				<th>자기소개 : </th>
+				<td>${expertVO.expFormContent }</td>
+			</tr>
+			<tr>
+				<th>경력사항 : </th>
+				<td>${expertVO.expFormAssume }</td>
+			</tr>
+			<tr>
+				<th>진행상태 : </th>
+				<td>${expertVO.comCodeNm }</td>
+			</tr>
+			<tr>
+				<th>신청날짜 : </th>
+				<td><fmt:formatDate value="${expertVO.expRegDate }" pattern="yyyy-MM-dd"/></td>
+			</tr>
+			<tr>
+				<th>반려사유 : </th>
+				<td>
+					<textarea id="expRefuse" name="expRefuse" rows="5" cols="60"></textarea>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		<input type="button" id="listBtn" value="목록">
+		<input type="button" id="approvalBtn" value="승인">
+		<input type="button" id="refuseBtn" value="반려">
+	</div>
+</form>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	const listBtn = $("#listBtn");
+	const approvalBtn = $("#approvalBtn");
+	const refuseBtn = $("#refuseBtn");
+	const expAppfrm = $("#expAppfrm");
+
+	approvalBtn.on("click", function() {
+		expAppfrm.submit();
+	});
+	
+	refuseBtn.on("click", function(event) {
+		event.preventDefault();
+		if ($("#expRefuse").val() == null || $.trim($("#expRefuse").val()) == "") {
+			alert("반려 시, 반려사유를 반드시 입력하여야 합니다.")
+		} else {
+			expAppfrm.attr("action", "/coco/admin/refuseExpert");
+			expAppfrm.submit();
+		}
+	});
+	
+	listBtn.on("click", function() {
+		location.href = "/coco/admin/expApplyList";
+	});
+	
+	
+});
+	
+	
+</script>

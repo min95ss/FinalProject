@@ -1,0 +1,7 @@
+package kr.or.ddit.project.workAssign.service;
+
+import kr.or.ddit.project.workAssign.vo.workAssignVO;
+
+public interface IWorkAssignService {
+	public void register(workAssignVO workAssign);
+}

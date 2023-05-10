@@ -1,0 +1,11 @@
+package kr.or.ddit.mapper.board;
+
+import java.util.List;
+
+import kr.or.ddit.blog.vo.MyBlogPostVO;
+
+public interface BlogBoardMapper {
+
+	public List<MyBlogPostVO> publicBoardList(String postPublicYn, String postDelYn);
+
+}

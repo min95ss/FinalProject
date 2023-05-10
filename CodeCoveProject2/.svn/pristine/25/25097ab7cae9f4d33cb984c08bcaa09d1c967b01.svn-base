@@ -1,0 +1,25 @@
+package kr.or.ddit.board.service.Impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.blog.vo.MyBlogPostVO;
+import kr.or.ddit.board.service.BlogBoardService;
+import kr.or.ddit.mapper.board.BlogBoardMapper;
+
+@Service
+public class BlogBoardServiceImpl implements BlogBoardService {
+	
+	@Inject
+	private BlogBoardMapper blBoMapper;
+	
+
+	@Override
+	public List<MyBlogPostVO> publicBoardList(String postPublicYn,String postDelYn) {
+		return blBoMapper.publicBoardList(postPublicYn,postDelYn);
+	}
+
+}
